@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.MenuActivity">
+
+    <Button
+        android:id="@+id/btnMenuEditProfile"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:text="Edit Profile"
+        android:backgroundTint="@color/editProfile"
+        android:drawableLeft="@drawable/ic_person"/>
+    />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Tracking"
+        android:textSize="25sp"
+        android:gravity="center"/>
+    <Button
+        android:id="@+id/btnMenuTracking"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="100dp"
+        android:text="Tracking"
+        android:drawableLeft="@drawable/ic_tracking"/>
+
+    <Button
+        android:id="@+id/btnMenuTrainingList"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="100dp"
+        android:text="training"
+        android:drawableLeft="@drawable/ic_training"/>
+    />
+    <Button
+        android:id="@+id/btnMenuGoals"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="100dp"
+        android:text="Goal"
+        android:drawableLeft="@drawable/ic_goal"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Calculator"
+        android:textSize="25sp"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/btnMenuBMICalculator"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="100dp"
+        android:drawableLeft="@drawable/ic_calculator"
+        android:text="BMI"/>
+
+
+
+</LinearLayout>

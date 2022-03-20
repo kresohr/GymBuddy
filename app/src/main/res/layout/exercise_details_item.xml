@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:gravity="top">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardElevation="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/lblSetItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SET 1"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:id="@+id/lblPonavljanjaItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_weight="2"
+                />
+            <TextView
+                android:id="@+id/lblKilazaItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20KG"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:layout_weight="1"
+                />
+
+
+
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</LinearLayout>
