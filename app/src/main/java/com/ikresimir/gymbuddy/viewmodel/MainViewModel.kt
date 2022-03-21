@@ -38,7 +38,6 @@ class MainViewModel: ViewModel() {
                 userCurrentWeight = user.userCurrentWeight
                 sex = user.sex
             }
-
         }
     }
 }

@@ -29,7 +29,6 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var radioBtnFemale : RadioButton
     private lateinit var btnSaveBasicInfo: Button
     private lateinit var sex: String
-    private var newUser = true
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +44,7 @@ class ProfileActivity : AppCompatActivity() {
         sex = "none"
         radioBtnMale = findViewById(R.id.radioBtnMale)
         radioBtnFemale = findViewById(R.id.radioBtnFemale)
-        txtAge = findViewById(R.id.txtAge)
+        txtAge = findViewById(R.id.txtUserAge)
         txtFirstName = findViewById(R.id.txtFirstName)
         txtUserHeight = findViewById(R.id.txtUserHeight)
         txtCurrentWeight = findViewById(R.id.txtCurrentWeight)
@@ -72,8 +71,7 @@ class ProfileActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun checkIfOldUser(getUser: MainViewModel){
         getUser.getUserProfileData(this)
-        newUser = getUser.newUser
-        if (!newUser){
+        if (getUser.newUser == false){
             txtFirstName.text = getUser.firstName
             txtAge.text = getUser.age.toString()
             txtCurrentWeight.text = getUser.userCurrentWeight.toString()

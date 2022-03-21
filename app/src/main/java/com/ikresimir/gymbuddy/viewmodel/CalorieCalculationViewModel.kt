@@ -14,7 +14,9 @@ class CalorieCalculationViewModel: ViewModel() {
     private var goalData = mutableListOf<GoalProfile>()
     var userHeight = 0.0
     var userCurrentWeight = 0.0
+    var userAge = 0
     var activity_level = 0
+    var userSex = ""
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -28,6 +30,8 @@ class CalorieCalculationViewModel: ViewModel() {
         for (user in userData){
             userHeight = user.userHeight
             userCurrentWeight = user.userCurrentWeight
+            userAge = user.age
+            userSex = user.sex
         }
         goalData = repository.getGoalInformation(context)
         for (goal in goalData){

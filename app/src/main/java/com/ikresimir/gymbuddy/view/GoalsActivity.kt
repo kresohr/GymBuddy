@@ -1,5 +1,6 @@
 package com.ikresimir.gymbuddy.view
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,6 +42,8 @@ class GoalsActivity : AppCompatActivity() {
 
         btnSetGoal.setOnClickListener {
             checkData(goalsViewModel)
+            val intent = Intent(this, CalorieCalculationActivity::class.java)
+            this.startActivity(intent)
         }
 
     }

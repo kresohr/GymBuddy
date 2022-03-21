@@ -16,7 +16,9 @@ import java.util.*
 private lateinit var btnNewGoal: Button
 private lateinit var txtHeight: TextView
 private lateinit var txtWeight: TextView
+private lateinit var txtAge: TextView
 private lateinit var endDate: String
+private lateinit var userSex: String
 private lateinit var radioBtnEasyActivity: RadioButton
 private lateinit var radioBtnMidActivity: RadioButton
 private lateinit var radioBtnIntensiveActivity: RadioButton
@@ -27,11 +29,13 @@ class CalorieCalculationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calorie_calculation)
         btnNewGoal = findViewById(R.id.btnNewGoal)
+        txtAge = findViewById(R.id.txtAge)
         txtHeight = findViewById(R.id.txtCalculatorHeight)
         txtWeight = findViewById(R.id.txtCalculatorWeight)
         radioBtnEasyActivity = findViewById(R.id.radioBtnEasyActivity)
         radioBtnMidActivity = findViewById(R.id.radioBtnMidActivity)
         radioBtnIntensiveActivity = findViewById(R.id.radioBtnIntensiveActivity)
+        userSex = ""
         var lblLightWeightDrop = findViewById<TextView>(R.id.lblLightWeightDrop)
         var lblNormalWeightDrop = findViewById<TextView>(R.id.lblNormalWeightDrop)
         var lblIntensiveWeightDrop = findViewById<TextView>(R.id.lblIntensiveWeightDrop)
@@ -56,6 +60,9 @@ class CalorieCalculationActivity : AppCompatActivity() {
         viewModel.getUserProfileData(this)
         txtHeight.text = viewModel.userHeight.toString()
         txtWeight.text = viewModel.userCurrentWeight.toString()
+        txtAge.text = viewModel.userAge.toString()
+        userSex = viewModel.userSex
+
         when{
             viewModel.activity_level == 1 -> radioBtnEasyActivity.isChecked = true
             viewModel.activity_level == 2 -> radioBtnMidActivity.isChecked = true
@@ -70,6 +77,15 @@ class CalorieCalculationActivity : AppCompatActivity() {
     }
 
     private fun calculateRequiredCalories(){
+        //Male
+        if(userSex=="m"){
+
+        }
+
+        //Female
+        if(userSex=="f"){
+
+        }
 
     }
 

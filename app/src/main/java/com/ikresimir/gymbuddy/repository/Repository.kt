@@ -200,7 +200,15 @@ class Repository {
     fun getLoggedInUser(context: Context) {
         val sharedPreference: SharedPreferences =
             context.getSharedPreferences("Current User", MODE_PRIVATE)
-        currentUser = sharedPreference.getString("username", null).toString()
+        var getUsername = sharedPreference.getString("username", null).toString()
+
+        transaction {
+            for (user in User.select { User.username eq getUsername })
+            {
+                currentUser = user[User.username]
+            }
+        }
+
     }
 
     fun logout(context: Context) {
@@ -214,7 +222,6 @@ class Repository {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getUserData(context: Context): MutableList<UserProfile> {
         getLoggedInUser(context)
-
         var firstName: String = ""
         var userAge: Int = 0
         var height: Double = 0.0
