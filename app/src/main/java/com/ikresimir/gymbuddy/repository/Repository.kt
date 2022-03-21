@@ -28,22 +28,18 @@ class Repository {
     fun saveUser(
         context: Context,
         userFirstName: String,
-        dateOfBirth: String,
+        userAge: Int,
         userHeight: Double,
         currentWeight: Double,
         userSex: String
     ) {
-        val fullDate: List<String> = dateOfBirth.split("-")
-        val year = fullDate[0].toInt()
-        val month = fullDate[1].toInt()
-        val day = fullDate[2].toInt()
         getLoggedInUser(context)
         transaction {
             User.update({ User.username eq currentUser }) {
                 it[name] = userFirstName
                 it[sex] = userSex
                 it[current_weight] = currentWeight
-                it[birth_date] = LocalDate.of(year, month, day)
+                it[age] = userAge
                 it[height] = userHeight
             }
         }
@@ -220,7 +216,7 @@ class Repository {
         getLoggedInUser(context)
 
         var firstName: String = ""
-        var dateOfBirth: String = ""
+        var userAge: Int = 0
         var height: Double = 0.0
         var currentWeight: Double = 0.0
         var sex: String = ""
@@ -231,12 +227,12 @@ class Repository {
                 (User.username eq currentUser)
             }){
                 firstName = user[User.name]
-                dateOfBirth = user[User.birth_date].toString()
+                userAge = user[User.age]
                 height = user[User.height]
                 currentWeight = user[User.current_weight]
                 sex = user[User.sex]
             }
-            userProfile.add(UserProfile(firstName,dateOfBirth,height,currentWeight,sex))
+            userProfile.add(UserProfile(firstName,userAge,height,currentWeight,sex))
         }
         return userProfile
     }

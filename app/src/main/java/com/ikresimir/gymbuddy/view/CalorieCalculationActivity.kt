@@ -32,6 +32,10 @@ class CalorieCalculationActivity : AppCompatActivity() {
         radioBtnEasyActivity = findViewById(R.id.radioBtnEasyActivity)
         radioBtnMidActivity = findViewById(R.id.radioBtnMidActivity)
         radioBtnIntensiveActivity = findViewById(R.id.radioBtnIntensiveActivity)
+        var lblLightWeightDrop = findViewById<TextView>(R.id.lblLightWeightDrop)
+        var lblNormalWeightDrop = findViewById<TextView>(R.id.lblNormalWeightDrop)
+        var lblIntensiveWeightDrop = findViewById<TextView>(R.id.lblIntensiveWeightDrop)
+
         calorieCalculatorViewModel = CalorieCalculationViewModel()
         endDate = ""
 
@@ -65,5 +69,8 @@ class CalorieCalculationActivity : AppCompatActivity() {
         endDate = formatDate.format(calendar.time)
     }
 
+    private fun calculateRequiredCalories(){
+
+    }
 
 }

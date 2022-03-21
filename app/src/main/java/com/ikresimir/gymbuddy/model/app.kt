@@ -10,7 +10,7 @@ object User : Table(){
     val name: Column<String> = varchar("name",32)
     val sex: Column<String> = char("sex",1)
     val current_weight: Column<Double> = double("current_weight")
-    val birth_date: Column<LocalDate> = date("birth_date")
+    val age: Column<Int> = integer("age")
     val height: Column<Double> = double("height")
     val bmi: Column<Double> = double("bmi")
     val username: Column<String> = varchar("username", 32)

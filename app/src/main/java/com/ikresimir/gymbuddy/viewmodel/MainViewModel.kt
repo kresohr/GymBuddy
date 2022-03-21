@@ -12,15 +12,15 @@ class MainViewModel: ViewModel() {
     private val repository = Repository()
     private var userData = mutableListOf<UserProfile>()
     var firstName = ""
-    var birthDate = ""
+    var age = 0
     var userHeight = 0.0
     var userCurrentWeight = 0.0
     var sex = ""
     var newUser = true
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun saveUserData(context: Context, name: String, birthDate: String, height: Double, currentWeight:Double, sex:String){
-        repository.saveUser(context,name,birthDate,height,currentWeight,sex)
+    fun saveUserData(context: Context, name: String, age: Int, height: Double, currentWeight:Double, sex:String){
+        repository.saveUser(context,name,age,height,currentWeight,sex)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -33,7 +33,7 @@ class MainViewModel: ViewModel() {
             }
             else{
                 newUser = false
-                birthDate = user.birthDate
+                age = user.age
                 userHeight = user.userHeight
                 userCurrentWeight = user.userCurrentWeight
                 sex = user.sex

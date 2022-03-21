@@ -21,7 +21,7 @@ import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
 
-    private lateinit var txtSelectDate : TextView
+    private lateinit var txtAge : TextView
     private lateinit var txtFirstName : TextView
     private lateinit var txtUserHeight : TextView
     private lateinit var txtCurrentWeight : TextView
@@ -45,7 +45,7 @@ class ProfileActivity : AppCompatActivity() {
         sex = "none"
         radioBtnMale = findViewById(R.id.radioBtnMale)
         radioBtnFemale = findViewById(R.id.radioBtnFemale)
-        txtSelectDate = findViewById(R.id.txtDateOfBirth)
+        txtAge = findViewById(R.id.txtAge)
         txtFirstName = findViewById(R.id.txtFirstName)
         txtUserHeight = findViewById(R.id.txtUserHeight)
         txtCurrentWeight = findViewById(R.id.txtCurrentWeight)
@@ -53,19 +53,6 @@ class ProfileActivity : AppCompatActivity() {
         val getUser = MainViewModel()
         checkIfOldUser(getUser)
 
-        //Datum
-        val fldDateOfBirth :TextInputLayout = findViewById(R.id.fldDateOfBirth)
-        val calendar = Calendar.getInstance()
-        val dateSelection = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            setDate(calendar)
-        }
-        fldDateOfBirth.setStartIconOnClickListener {
-            DatePickerDialog(this,dateSelection,calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)).show()
-        }
         btnSaveBasicInfo.setOnClickListener {
             checkSex()
             if(checkIfFieldsEmpty()){
@@ -73,7 +60,7 @@ class ProfileActivity : AppCompatActivity() {
             }
             else{
                 getUser.saveUserData(this,txtFirstName.text.toString(),
-                    txtSelectDate.text.toString(),txtUserHeight.text.toString().toDouble(),
+                    txtAge.text.toString().toInt(),txtUserHeight.text.toString().toDouble(),
                     txtCurrentWeight.text.toString().toDouble(),sex)
                 val intent = Intent(this, GoalsActivity::class.java)
                 this.startActivity(intent)
@@ -88,7 +75,7 @@ class ProfileActivity : AppCompatActivity() {
         newUser = getUser.newUser
         if (!newUser){
             txtFirstName.text = getUser.firstName
-            txtSelectDate.text = getUser.birthDate
+            txtAge.text = getUser.age.toString()
             txtCurrentWeight.text = getUser.userCurrentWeight.toString()
             txtUserHeight.text = getUser.userHeight.toString()
             when(getUser.sex){
@@ -98,11 +85,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun setDate(calendar: Calendar){
-        val dateFormat = "yyyy-MM-dd"
-        val formatDate = SimpleDateFormat (dateFormat)
-        txtSelectDate.text = formatDate.format(calendar.time)
-    }
     private fun checkSex(){
         if (radioBtnMale.isChecked)
             sex = "m"
@@ -110,13 +92,8 @@ class ProfileActivity : AppCompatActivity() {
             sex = "z"
     }
     private fun checkIfFieldsEmpty(): Boolean{
-        if(txtFirstName.text.isEmpty() || txtSelectDate.text.isEmpty()
-            || txtCurrentWeight.text.isEmpty() || txtUserHeight.text.isEmpty()){
-            return true
-        }
-        else{
-            return false
-        }
+        return (txtFirstName.text.isEmpty() || txtAge.text.isEmpty()
+                || txtCurrentWeight.text.isEmpty() || txtUserHeight.text.isEmpty())
     }
 
 }
