@@ -68,6 +68,7 @@ class GoalsActivity : AppCompatActivity() {
         }
     }
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun rememberGoal(viewModel: GoalsViewModel, intensity: Int){
         viewModel.rememberGoal(this, txtDesiredWeight.text.toString().toDouble(),

@@ -8,11 +8,10 @@ import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.ikresimir.gymbuddy.Goal
+import com.ikresimir.gymbuddy.model.GoalProfile
 import com.ikresimir.gymbuddy.User
 import com.ikresimir.gymbuddy.model.UserProfile
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNull
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 import java.time.LocalDate
@@ -191,7 +190,7 @@ class Repository {
     fun checkIfProfileSet(context: Context){
         val sharedPreference: SharedPreferences =
             context.getSharedPreferences("Profile", MODE_PRIVATE)
-        profileSet = sharedPreference.getBoolean("Profile", null == true)
+        profileSet = sharedPreference.getBoolean("Profile", false)
     }
 
     fun rememberUser(context: Context, username: String) {
@@ -242,7 +241,64 @@ class Repository {
         return userProfile
     }
 
-    fun getP
+    fun getGoalInformation(context: Context): MutableList<GoalProfile>{
+        getLoggedInUser(context)
+        var desiredWeight = 0.0
+        var activityLevel = 0
+        var userId = 0
+        var goalInformation = mutableListOf<GoalProfile>()
+
+        val sharedPreference: SharedPreferences =
+            context.getSharedPreferences("GoalID", MODE_PRIVATE)
+        goalID = sharedPreference.getString("GoalID", null).toString()
+
+        if(goalID.isNotEmpty()){
+            transaction {
+                for (goal in Goal.select { (Goal.id eq goalID.toInt()) }){
+                    desiredWeight = goal[Goal.desired_weight]
+                    activityLevel = goal[Goal.activity_level]
+                }
+            }
+            goalInformation.add(GoalProfile(desiredWeight,activityLevel))
+        }
+        else{
+            transaction {
+                for (user in User.select{
+                    (User.username eq currentUser)
+                }){
+                    userId = user[User.id]
+                }
+            }
+            transaction {
+                for (goal in Goal.select{(Goal.user_id eq userId and (Goal.goal_end.isNull()))
+                }){
+                    desiredWeight = goal[Goal.desired_weight]
+                    activityLevel = goal[Goal.activity_level]
+                }
+            }
+            goalInformation.add(GoalProfile(desiredWeight,activityLevel))
+        }
+        return goalInformation
+    }
+
+    fun checkIfGoalExists(context: Context): Boolean{
+        getLoggedInUser(context)
+        var userId = 0
+        var found = false
+
+        transaction {
+            for (user in User.select { (User.username eq currentUser) }) {
+                userId = user[User.id]
+            }
+        }
+        transaction {
+           for (user in Goal.select { (Goal.user_id eq userId and (Goal.goal_end.isNull())) }){
+               found = true
+            }
+        }
+        return found
+    }
+
 }
 
 
