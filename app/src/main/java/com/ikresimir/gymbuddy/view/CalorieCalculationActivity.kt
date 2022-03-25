@@ -36,14 +36,19 @@ class CalorieCalculationActivity : AppCompatActivity() {
         radioBtnMidActivity = findViewById(R.id.radioBtnMidActivity)
         radioBtnIntensiveActivity = findViewById(R.id.radioBtnIntensiveActivity)
         userSex = ""
-        var lblLightWeightDrop = findViewById<TextView>(R.id.lblLightWeightDrop)
-        var lblNormalWeightDrop = findViewById<TextView>(R.id.lblNormalWeightDrop)
-        var lblIntensiveWeightDrop = findViewById<TextView>(R.id.lblIntensiveWeightDrop)
+        var lblLight = findViewById<TextView>(R.id.lblLight)
+        var lblNormal = findViewById<TextView>(R.id.lblNormal)
+        var lblIntensive = findViewById<TextView>(R.id.lblIntensive)
+        var lblLightWeightResult = findViewById<TextView>(R.id.lblLightWeightResult)
+        var lblNormalWeightResult = findViewById<TextView>(R.id.lblNormalWeightResult)
+        var lblIntensiveWeightResult = findViewById<TextView>(R.id.lblIntensiveWeightResult)
+
 
         calorieCalculatorViewModel = CalorieCalculationViewModel()
         endDate = ""
 
         getUserData(calorieCalculatorViewModel)
+        calculateCalories(calorieCalculatorViewModel, lblLight, lblNormal, lblIntensive, lblLightWeightResult, lblNormalWeightResult, lblIntensiveWeightResult)
 
         val calendar = Calendar.getInstance()
         getDate(calendar)
@@ -69,24 +74,28 @@ class CalorieCalculationActivity : AppCompatActivity() {
             viewModel.activity_level == 3 -> radioBtnIntensiveActivity.isChecked = true
         }
     }
+    private fun calculateCalories(viewModel: CalorieCalculationViewModel,
+                                  lblLight: TextView,
+                                  lblNormal: TextView,
+                                  lblIntensive: TextView,
+                                  lightWeightDrop: TextView,
+                                  normalWeightDrop: TextView,
+                                  intensiveWeightDrop: TextView){
+        viewModel.calculateCalories()
+        if(viewModel.bulk){
+            lblLight.text = "Light weight gain:"
+            lblNormal.text = "Normal weight gain:"
+            lblIntensive.text = "Extreme weight gain:"
+        }
+        lightWeightDrop.text = viewModel.lightWeight.toString()+" Kcal"
+        normalWeightDrop.text = viewModel.normalWeight.toString()+" Kcal"
+        intensiveWeightDrop.text = viewModel.intensiveWeight.toString()+" Kcal"
+    }
 
     private fun getDate(calendar: Calendar){
         val dateFormat = "yyyy-MM-dd"
         val formatDate = SimpleDateFormat (dateFormat)
         endDate = formatDate.format(calendar.time)
-    }
-
-    private fun calculateRequiredCalories(){
-        //Male
-        if(userSex=="m"){
-
-        }
-
-        //Female
-        if(userSex=="f"){
-
-        }
-
     }
 
 }

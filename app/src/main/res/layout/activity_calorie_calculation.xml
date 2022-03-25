@@ -113,16 +113,17 @@
         android:orientation="horizontal"
         android:layout_marginTop="20dp">
         <TextView
+            android:id="@+id/lblLight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="left"
             android:textStyle="bold"
-            android:text="Light weight drop/gain:"
+            android:text="Light weight drop:"
             android:textSize="18sp" />
         <TextView
-            android:id="@+id/lblLightWeightDrop"
+            android:id="@+id/lblLightWeightResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2000Kcal"
@@ -135,15 +136,16 @@
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/lblNormal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="left"
-            android:text="Normal weight drop/gain:"
+            android:text="Normal weight drop:"
             android:textStyle="bold"
             android:textSize="18sp" />
         <TextView
-            android:id="@+id/lblNormalWeightDrop"
+            android:id="@+id/lblNormalWeightResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2300Kcal"
@@ -156,15 +158,16 @@
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/lblIntensive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="left"
             android:textStyle="bold"
-            android:text="Intensive weight drop/gain:"
+            android:text="Extreme weight drop:"
             android:textSize="18sp" />
         <TextView
-            android:id="@+id/lblIntensiveWeightDrop"
+            android:id="@+id/lblIntensiveWeightResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2600Kcal"
