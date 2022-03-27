@@ -18,10 +18,8 @@ class WelcomeActivity : AppCompatActivity() {
 
         val viewModel = WelcomeViewModel()
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent (this, LoginActivity::class.java)
-            startActivity(intent)
+            checkIfLogged(viewModel)
         },3000)
-        checkIfLogged(viewModel)
     }
 
     private fun checkIfLogged(viewModel: WelcomeViewModel){
