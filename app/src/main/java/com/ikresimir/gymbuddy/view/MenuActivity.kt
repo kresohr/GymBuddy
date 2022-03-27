@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.widget.Button
 import com.ikresimir.gymbuddy.R
-import com.ikresimir.gymbuddy.viewmodel.GoalsViewModel
-import com.ikresimir.gymbuddy.viewmodel.LoginViewModel
 import com.ikresimir.gymbuddy.viewmodel.MenuViewModel
 
 private lateinit var btnMenuEditProfile: Button
@@ -39,7 +37,7 @@ class MenuActivity : AppCompatActivity() {
             this.startActivity(intent)
         }
         btnMenuTracking.setOnClickListener {
-            val intent = Intent(this, TrackingActivity::class.java)
+            val intent = Intent(this, TrackingListActivity::class.java)
             this.startActivity(intent)
         }
         btnMenuTrainingList.setOnClickListener {

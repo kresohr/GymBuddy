@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.TrackingActivity">
+    tools:context=".view.SingleTrackingActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="Dnevno Praćenje"
+        android:text="Daily Tracking"
         android:textSize="25sp" />
 
     <TextView
@@ -20,17 +20,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Unesite stanje na današnji dan"
+        android:text="Enter your stats for today"
         android:textSize="18sp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fldDanasnjiDatum"
+        android:id="@+id/fldTrackingCurrentDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="50dp"
         android:gravity="center"
-        android:hint="Današnji Datum"
+        android:hint="Date"
         app:startIconDrawable="@drawable/ic_date">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -47,7 +47,8 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:hint="Kilaža">
+        android:hint="Weight"
+        app:startIconDrawable="@drawable/ic_weight">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtTodaysWeight"
@@ -62,22 +63,25 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:hint="Kalorije">
+        android:hint="Calories"
+        app:startIconDrawable="@drawable/ic_calories">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtTodaysCalories"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center" />
+            android:gravity="center"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btnUnesiStanje"
+        android:id="@+id/btnSaveStats"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="30dp"
         android:layout_marginHorizontal="100dp"
-        android:text="UNESI" />
+        android:text="SAVE"
+        android:drawableLeft="@drawable/ic_save" />
 
 </LinearLayout>

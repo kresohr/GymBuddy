@@ -10,7 +10,7 @@ import java.util.*
 private lateinit var txtTodaysDate : TextView
 private lateinit var txtTodaysWeight : TextView
 private lateinit var txtTodaysCalories : TextView
-class TrackingActivity : AppCompatActivity() {
+class SingleTrackingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tracking)

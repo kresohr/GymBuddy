@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="Lista treninga"
+        android:text="List of training"
         android:textSize="25sp" />
 
     <TextView
@@ -20,36 +20,39 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Pregledajte vaše treninge po datumu"
+        android:text="Check your training entry"
         android:textSize="18sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSviTreninzi"
+        android:id="@+id/recyclerViewAllTrainings"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="10dp"
         android:layout_width="match_parent"
         android:layout_height="350dp"/>
 
     <Button
-        android:id="@+id/btnNoviTrening"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="100dp"
-        android:text="NOVI" />
-    <Button
-        android:id="@+id/btnUrediTrening"
+        android:id="@+id/btnNewTraining"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="100dp"
-        android:text="UREDI" />
+        android:text="New"
+        android:drawableLeft="@drawable/ic_plus"/>
     <Button
-        android:id="@+id/btnObrisiTrening"
+        android:id="@+id/btnEditTraining"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="100dp"
-        android:text="Obriši" />
+        android:text="edit"
+        android:drawableLeft="@drawable/ic_edit"/>
+    <Button
+        android:id="@+id/btnDeleteTraining"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="100dp"
+        android:text="Delete"
+        android:drawableLeft="@drawable/ic_remove"/>
 
 </LinearLayout>

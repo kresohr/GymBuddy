@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.TrainingActivity">
+    tools:context=".view.SingleTrainingActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="Trening"
+        android:text="Training"
         android:textSize="25sp" />
 
     <TextView
@@ -20,20 +20,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Unesite odrađene vježbe"
+        android:text="Enter exercises you have completed"
         android:textSize="18sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:hint="Današnji Datum"
+        android:hint="Date"
         app:startIconDrawable="@drawable/ic_date">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtDanasnjiDatumVjezbanje"
+            android:id="@+id/txtCurrentDateSingleTraining"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
@@ -46,10 +46,11 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:hint="Naziv Treninga">
+        android:hint="Name your training"
+        app:startIconDrawable="@drawable/ic_training">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtNazivTreninga"
+            android:id="@+id/txtSingleTrainingName"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,11 +62,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Popis vježbi"
+        android:text="Exercise list"
         android:textSize="18sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewTracking"
+        android:id="@+id/recyclerViewExerciseList"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="10dp"
         android:layout_width="match_parent"
@@ -75,15 +76,25 @@
         android:id="@+id/btnAddExercise"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="100dp"
-        android:text="dodaj" />
-    <Button
-        android:id="@+id/btnObrisiVjezbu"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="100dp"
-        android:text="obriši" />
+        android:text="add"
+        android:drawableLeft="@drawable/ic_plus"/>
+    <Button
+        android:id="@+id/btnDeleteExercise"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="100dp"
+        android:text="delete"
+        android:drawableLeft="@drawable/ic_remove"/>
+    <Button
+        android:id="@+id/btnCompleteTrainingEntry"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="100dp"
+        android:text="done"
+        android:drawableLeft="@drawable/ic_save"/>
 
 </LinearLayout>
