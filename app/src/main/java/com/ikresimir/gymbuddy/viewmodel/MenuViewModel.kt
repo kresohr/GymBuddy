@@ -10,4 +10,14 @@ class MenuViewModel: ViewModel() {
     fun checkIfGoalExists(context: Context): Boolean{
         return repository.checkIfGoalExists(context)
     }
+
+    fun logout(context: Context){
+        repository.logout(context)
+    }
+
+    fun checkIfLogged(context: Context): Boolean{
+        repository.getLoggedInUser(context)
+        return !repository.currentUser.isEmpty()
+    }
+
 }

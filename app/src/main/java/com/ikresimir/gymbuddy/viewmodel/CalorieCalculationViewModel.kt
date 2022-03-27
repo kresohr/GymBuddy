@@ -78,7 +78,7 @@ class CalorieCalculationViewModel: ViewModel() {
                     }
                 }
             }
-            if(desiredWeight<userCurrentWeight){
+            if(desiredWeight<=userCurrentWeight){
                 //User wants to lose fat
                 when(activity_level) {
                     1 -> {

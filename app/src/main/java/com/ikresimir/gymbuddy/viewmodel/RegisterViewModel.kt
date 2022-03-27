@@ -7,15 +7,11 @@ import androidx.lifecycle.ViewModel
 import com.ikresimir.gymbuddy.repository.Repository
 
 class RegisterViewModel: ViewModel() {
-    var successfullyRegistered = false
+    val repository = Repository()
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun registerUser(context: Context, username: String, password: String) {
-        val repository = Repository()
+    fun registerUser(context: Context, username: String, password: String): Boolean {
         repository.registerUser(context, username, password)
-
-        if(repository.successfullyRegistered){
-            successfullyRegistered = true
-        }
+        return (repository.successfullyRegistered)
     }
 }

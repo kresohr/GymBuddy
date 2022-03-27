@@ -20,12 +20,10 @@ class RegistrationActivity : AppCompatActivity() {
         val txtPassword: TextView = findViewById(R.id.txtPasswordRegistration)
         val lblLogin: TextView = findViewById(R.id.lblLogin)
         val btnRegister: Button = findViewById(R.id.btnRegister)
+        val viewModel = RegisterViewModel()
 
         btnRegister.setOnClickListener {
-            val viewModel = RegisterViewModel()
-            viewModel.registerUser(this,txtUsername.text.toString(),txtPassword.text.toString())
-
-            if (viewModel.successfullyRegistered){
+            if (viewModel.registerUser(this,txtUsername.text.toString(),txtPassword.text.toString())){
                 val intent = Intent(this, LoginActivity::class.java)
                 this.startActivity(intent)
             }

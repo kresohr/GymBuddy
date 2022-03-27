@@ -6,10 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
@@ -27,6 +24,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var txtCurrentWeight : TextView
     private lateinit var radioBtnMale : RadioButton
     private lateinit var radioBtnFemale : RadioButton
+    private lateinit var radioBtnGroup : RadioGroup
     private lateinit var btnSaveBasicInfo: Button
     private lateinit var sex: String
 
@@ -49,6 +47,7 @@ class ProfileActivity : AppCompatActivity() {
         txtUserHeight = findViewById(R.id.txtUserHeight)
         txtCurrentWeight = findViewById(R.id.txtCurrentWeight)
         btnSaveBasicInfo = findViewById(R.id.btnSaveBasicInfo)
+        radioBtnGroup = findViewById(R.id.radioBtnGroup)
         val getUser = MainViewModel()
         checkIfOldUser(getUser)
 
@@ -90,8 +89,11 @@ class ProfileActivity : AppCompatActivity() {
             sex = "z"
     }
     private fun checkIfFieldsEmpty(): Boolean{
-        return (txtFirstName.text.isEmpty() || txtAge.text.isEmpty()
-                || txtCurrentWeight.text.isEmpty() || txtUserHeight.text.isEmpty())
+        return (txtFirstName.text.isEmpty() ||
+                txtAge.text.isEmpty() ||
+                txtCurrentWeight.text.isEmpty() ||
+                txtUserHeight.text.isEmpty() ||
+                radioBtnGroup.checkedRadioButtonId == -1)
     }
 
 }

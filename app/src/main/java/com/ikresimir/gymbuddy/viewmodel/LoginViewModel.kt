@@ -7,13 +7,10 @@ import com.ikresimir.gymbuddy.repository.Repository
 class LoginViewModel: ViewModel() {
 
     val repository = Repository()
-    var correctLogin = false
 
-    fun loginUser(context: Context, username: String, password: String) {
+    fun loginUser(context: Context, username: String, password: String): Boolean {
         repository.checkLogin(context, username, password)
-        if(repository.loginCombination){
-            correctLogin = true
-        }
+        return repository.loginCombination
     }
 
     fun checkIfProfileSet(context: Context): Boolean{
@@ -21,8 +18,4 @@ class LoginViewModel: ViewModel() {
         return repository.profileSet
     }
 
-    fun checkIfLogged(context: Context): Boolean{
-        repository.getLoggedInUser(context)
-        return !repository.currentUser.isEmpty()
-    }
 }

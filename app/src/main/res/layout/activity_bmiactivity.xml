@@ -81,7 +81,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="BMI:"
+            android:text="Your BMI:"
             android:textStyle="bold"
             android:textSize="25sp" />
         <TextView

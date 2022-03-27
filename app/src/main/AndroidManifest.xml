@@ -10,17 +10,20 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:screenOrientation="portrait"
+        android:supportsRtl="true"
         android:theme="@style/Theme.GymBuddy">
-
-        <activity android:name=".view.RegistrationActivity"></activity>
-        <activity android:name=".view.LoginActivity">
+        <activity android:name=".view.WelcomeActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".view.RegistrationActivity" />
+        <activity
+            android:name=".view.LoginActivity"
+            android:noHistory="true">
         </activity>
         <activity android:name=".view.TrainingListActivity" />
         <activity android:name=".view.BMIActivity" />
@@ -31,8 +34,7 @@
         <activity android:name=".view.TrackingActivity" />
         <activity android:name=".view.MenuActivity" />
         <activity android:name=".view.GoalsActivity" />
-        <activity android:name=".view.ProfileActivity"/>
-
+        <activity android:name=".view.ProfileActivity" />
     </application>
 
 </manifest>

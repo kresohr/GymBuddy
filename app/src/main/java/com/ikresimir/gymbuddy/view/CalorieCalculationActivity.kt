@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.StrictMode
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.TextView
@@ -28,6 +29,10 @@ class CalorieCalculationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calorie_calculation)
+        if (Build.VERSION.SDK_INT > 9) {
+            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+        }
         btnNewGoal = findViewById(R.id.btnNewGoal)
         txtAge = findViewById(R.id.txtAge)
         txtHeight = findViewById(R.id.txtCalculatorHeight)
@@ -54,9 +59,10 @@ class CalorieCalculationActivity : AppCompatActivity() {
         getDate(calendar)
 
         btnNewGoal.setOnClickListener {
+            calorieCalculatorViewModel.newGoal(this, endDate)
             val intent = Intent(this, GoalsActivity::class.java)
             this.startActivity(intent)
-            calorieCalculatorViewModel.newGoal(this, endDate)
+
         }
     }
 

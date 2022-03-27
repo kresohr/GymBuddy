@@ -72,6 +72,17 @@
         android:drawableLeft="@drawable/ic_calculator"
         android:text="BMI"/>
 
+    <Button
+        android:id="@+id/btnMenuLogout"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:text="Logout"
+        android:backgroundTint="@color/editProfile"
+        android:drawableLeft="@drawable/ic_logout"/>
+    />
+
 
 
 </LinearLayout>

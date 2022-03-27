@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.StrictMode
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.ikresimir.gymbuddy.R
+import com.ikresimir.gymbuddy.model.GoalProfile
 import com.ikresimir.gymbuddy.viewmodel.GoalsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,19 +32,27 @@ class GoalsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goals)
 
+        if (Build.VERSION.SDK_INT > 9) {
+            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+        }
+
+        goalsViewModel = GoalsViewModel()
+        checkIfGoalExists(goalsViewModel)
+
         txtDesiredWeight = findViewById(R.id.txtDesiredWeight)
         txtStartDate = findViewById(R.id.txtGoalStartDate)
         btnSetGoal = findViewById(R.id.btnSetGoal)
         radioBtnEasy = findViewById(R.id.radioBtnEasyActivity)
         radioBtnMedium = findViewById(R.id.radioBtnMidActivity)
         radioBtnIntensive = findViewById(R.id.radioBtnIntensiveActivity)
-        goalsViewModel = GoalsViewModel()
+
         val calendar = Calendar.getInstance()
         setStartingDate(calendar)
 
         btnSetGoal.setOnClickListener {
             checkData(goalsViewModel)
-            val intent = Intent(this, CalorieCalculationActivity::class.java)
+            val intent = Intent(this, MenuActivity::class.java)
             this.startActivity(intent)
         }
 
@@ -71,7 +81,12 @@ class GoalsActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun checkIfGoalExists(goalsViewModel: GoalsViewModel){
+        if(goalsViewModel.checkIfGoalExists(this)){
+            val intent = Intent(this, MenuActivity::class.java)
+            this.startActivity(intent)
+        }
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     private fun rememberGoal(viewModel: GoalsViewModel, intensity: Int){
         viewModel.rememberGoal(this, txtDesiredWeight.text.toString().toDouble(),

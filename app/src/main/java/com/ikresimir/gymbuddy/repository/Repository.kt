@@ -55,7 +55,7 @@ class Repository {
                 (User.username eq username)
             }) {
                 val hashedPassword = user[User.password]
-                val checkPassword = BCrypt.checkpw(password, hashedPassword.toString())
+                val checkPassword = BCrypt.checkpw(password, hashedPassword)
                 if (checkPassword) {
                     loginCombination = true
                     Toast.makeText(context, "Welcome", Toast.LENGTH_SHORT).show()
@@ -80,10 +80,10 @@ class Repository {
                 usernameAlreadyExists = true
             }
             if (!usernameAlreadyExists) {
-                val hashed = BCrypt.hashpw(newPassword, BCrypt.gensalt())
+                val hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt())
                 User.insert {
                     it[username] = newUsername
-                    it[password] = hashed
+                    it[password] = hashedPassword
                 }
                 successfullyRegistered = true
                 val registrationMessage =
@@ -97,7 +97,7 @@ class Repository {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun saveStartGoal(context: Context, desiredWeight: Double, startDate: String, intensity: Int){
-        var userId: Int = 0
+        var userId = 0
         val fullStartDate: List<String> = startDate.split("-")
         val startDateYear = fullStartDate[0].toInt()
         val startDateMonth = fullStartDate[1].toInt()
@@ -215,8 +215,8 @@ class Repository {
         val sharedPreference: SharedPreferences =
             context.getSharedPreferences("Current User", MODE_PRIVATE)
         val editor = sharedPreference.edit()
-        editor.clear()
-        editor.remove("username")
+        editor.clear().apply()
+        //editor.remove("username")
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -227,19 +227,24 @@ class Repository {
         var height: Double = 0.0
         var currentWeight: Double = 0.0
         var sex: String = ""
+        var bmi: Double = 0.0
         var userProfile = mutableListOf<UserProfile>()
 
         transaction {
             for (user in User.select {
                 (User.username eq currentUser)
             }){
-                firstName = user[User.name]
-                userAge = user[User.age]
-                height = user[User.height]
-                currentWeight = user[User.current_weight]
-                sex = user[User.sex]
+                if (user[User.height]!=null){
+                    firstName = user[User.name]
+                    userAge = user[User.age]
+                    height = user[User.height]
+                    currentWeight = user[User.current_weight]
+                    sex = user[User.sex]
+                    bmi = user[User.bmi]
+                    userProfile.add(UserProfile(firstName,userAge,height,currentWeight,sex,bmi))
+                }
+                println("NEMA PODATAKA!!!")
             }
-            userProfile.add(UserProfile(firstName,userAge,height,currentWeight,sex))
         }
         return userProfile
     }
@@ -250,6 +255,7 @@ class Repository {
         var activityLevel = 0
         var userId = 0
         var goalInformation = mutableListOf<GoalProfile>()
+        var goalHasEnded = false
 
         val sharedPreference: SharedPreferences =
             context.getSharedPreferences("GoalID", MODE_PRIVATE)
@@ -260,9 +266,12 @@ class Repository {
                 for (goal in Goal.select { (Goal.id eq goalID.toInt()) }){
                     desiredWeight = goal[Goal.desired_weight]
                     activityLevel = goal[Goal.activity_level]
+                    if (goal[Goal.goal_end]!=null){
+                        goalHasEnded=true
+                    }
                 }
             }
-            goalInformation.add(GoalProfile(desiredWeight,activityLevel))
+            goalInformation.add(GoalProfile(desiredWeight,activityLevel,goalHasEnded))
         }
         else{
             transaction {
@@ -277,9 +286,12 @@ class Repository {
                 }){
                     desiredWeight = goal[Goal.desired_weight]
                     activityLevel = goal[Goal.activity_level]
+                    if (goal[Goal.goal_end]!=null){
+                        goalHasEnded=true
+                    }
                 }
             }
-            goalInformation.add(GoalProfile(desiredWeight,activityLevel))
+            goalInformation.add(GoalProfile(desiredWeight,activityLevel,goalHasEnded))
         }
         return goalInformation
     }

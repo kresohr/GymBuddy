@@ -26,17 +26,17 @@ class MainViewModel: ViewModel() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getUserProfileData(context: Context){
         userData = repository.getUserData(context)
-        for (user in userData){
-            firstName = user.name
-            if (firstName == ""){
-                newUser = true
-            }
+        if (userData.isEmpty()) {
+            newUser=true
+        }
             else{
-                newUser = false
-                age = user.age
-                userHeight = user.userHeight
-                userCurrentWeight = user.userCurrentWeight
-                sex = user.sex
+                for (user in userData){
+                    newUser = false
+                    firstName = user.name
+                    age = user.age
+                    userHeight = user.userHeight
+                    userCurrentWeight = user.userCurrentWeight
+                    sex = user.sex
             }
         }
     }

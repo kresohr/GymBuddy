@@ -20,25 +20,16 @@ class LoginActivity : AppCompatActivity() {
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
         }
-
         val viewModel = LoginViewModel()
         val txtLogin: TextView = findViewById(R.id.txtUsernameLogin)
         val txtPassword: TextView = findViewById(R.id.txtPasswordLogin)
         val lblRegister: TextView = findViewById(R.id.lblRegister)
         val btnLogin: Button = findViewById(R.id.btnLogin)
-        checkIfLogged(viewModel)
 
         btnLogin.setOnClickListener {
-            viewModel.loginUser(this,txtLogin.text.toString(),txtPassword.text.toString())
-            if (viewModel.correctLogin){
-                if(viewModel.checkIfProfileSet(this)){
-                    val intent = Intent(this, MenuActivity::class.java)
-                    this.startActivity(intent)
-                }
-                else{
+            if (viewModel.loginUser(this,txtLogin.text.toString(),txtPassword.text.toString())){
                     val intent = Intent(this, ProfileActivity::class.java)
                     this.startActivity(intent)
-                }
             }
         }
 
@@ -48,10 +39,4 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkIfLogged(viewModel: LoginViewModel){
-        if (viewModel.checkIfLogged(this)){
-            val intent = Intent(this, MenuActivity::class.java)
-            this.startActivity(intent)
-        }
-    }
 }

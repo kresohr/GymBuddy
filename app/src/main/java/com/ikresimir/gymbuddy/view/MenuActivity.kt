@@ -1,11 +1,14 @@
 package com.ikresimir.gymbuddy.view
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.StrictMode
 import android.widget.Button
 import com.ikresimir.gymbuddy.R
 import com.ikresimir.gymbuddy.viewmodel.GoalsViewModel
+import com.ikresimir.gymbuddy.viewmodel.LoginViewModel
 import com.ikresimir.gymbuddy.viewmodel.MenuViewModel
 
 private lateinit var btnMenuEditProfile: Button
@@ -18,12 +21,17 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+        if (Build.VERSION.SDK_INT > 9) {
+            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+        }
 
         btnMenuEditProfile = findViewById(R.id.btnMenuEditProfile)
         btnMenuTracking = findViewById(R.id.btnMenuTracking)
         btnMenuTrainingList = findViewById(R.id.btnMenuTrainingList)
         btnMenuGoals = findViewById(R.id.btnMenuGoals)
         btnMenuBMICalculator = findViewById(R.id.btnMenuBMICalculator)
+        var btnMenuLogout = findViewById<Button>(R.id.btnMenuLogout)
         menuViewModel = MenuViewModel()
 
         btnMenuEditProfile.setOnClickListener {
@@ -53,9 +61,19 @@ class MenuActivity : AppCompatActivity() {
             val intent = Intent(this, BMIActivity::class.java)
             this.startActivity(intent)
         }
+        btnMenuLogout.setOnClickListener {
+            logout(menuViewModel)
+            val intent = Intent(this, LoginActivity::class.java)
+            this.startActivity(intent)
+            finish()
+        }
 
     }
     private fun checkIfGoalExists(viewModel: MenuViewModel): Boolean{
         return (viewModel.checkIfGoalExists(this))
+    }
+
+    private fun logout (viewModel: MenuViewModel){
+        viewModel.logout(this)
     }
 }
