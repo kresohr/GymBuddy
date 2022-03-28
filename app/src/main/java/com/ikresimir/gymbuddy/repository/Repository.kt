@@ -7,11 +7,14 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.ikresimir.gymbuddy.Daily_tracking
 import com.ikresimir.gymbuddy.Goal
 import com.ikresimir.gymbuddy.model.GoalProfile
 import com.ikresimir.gymbuddy.User
+import com.ikresimir.gymbuddy.model.TrackingProfile
 import com.ikresimir.gymbuddy.model.UserProfile
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 import java.time.LocalDate
@@ -314,6 +317,101 @@ class Repository {
         return found
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun saveTrackingData(context: Context, currentDate: String, currentWeight: Double, todayCalories: Int){
+        var userId = 0
+        var entryExists = false
+        val fullDate: List<String> = currentDate.split("-")
+        val dateYear = fullDate[0].toInt()
+        val dateMonth = fullDate[1].toInt()
+        val dateDay = fullDate[2].toInt()
+
+        getLoggedInUser(context)
+        transaction {
+            for (user in User.select{
+                (User.username eq currentUser)
+            }){
+                userId = user[User.id]
+            }
+        }
+        transaction {
+            for (entry in Daily_tracking.select{
+            (Daily_tracking.date eq LocalDate.of(dateYear,dateMonth,dateDay)) and (Daily_tracking.user_id eq userId)
+        }){
+                entryExists = true
+                updateTrackingData(context,userId,currentDate,currentWeight,todayCalories)
+            }
+        }
+        if (!entryExists){
+            transaction {
+                Daily_tracking.insert {
+                    it[date] =  LocalDate.of(dateYear,dateMonth,dateDay)
+                    it[weight] = currentWeight
+                    it[calories] = todayCalories
+                    it[user_id] = userId
+                }
+            }
+            Toast.makeText(context,"Saved",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updateTrackingData(context: Context, userId:Int, currentDate: String, currentWeight: Double, todayCalories: Int){
+        val fullDate: List<String> = currentDate.split("-")
+        val dateYear = fullDate[0].toInt()
+        val dateMonth = fullDate[1].toInt()
+        val dateDay = fullDate[2].toInt()
+        transaction {
+            Daily_tracking.update({
+                Daily_tracking.user_id eq userId and (Daily_tracking.date eq LocalDate.of(
+                    dateYear,
+                    dateMonth,
+                    dateDay
+                ))
+            }) {
+                it[weight] = currentWeight
+                it[calories] = todayCalories
+            }
+        }
+        Toast.makeText(context,"Saved",Toast.LENGTH_LONG).show()
+    }
+
+    fun getTrackingList(context: Context) : MutableList<TrackingProfile>{
+        val listOfTrackedItems = mutableListOf<TrackingProfile>()
+        var userId = 0
+        getLoggedInUser(context)
+        transaction {
+            for (user in User.select{
+                (User.username eq currentUser)
+            }){
+                userId = user[User.id]
+            }
+        }
+
+        transaction {
+            for (entry in Daily_tracking.select{
+                Daily_tracking.user_id eq userId
+            }){
+                listOfTrackedItems.add(TrackingProfile(entry[Daily_tracking.weight],
+                    entry[Daily_tracking.calories],entry[Daily_tracking.date].toString(),entry[Daily_tracking.user_id]))
+            }
+        }
+
+        return listOfTrackedItems
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun deleteFromTrackingList(itemDate: String, userId: Int, context: Context){
+        val fullDate: List<String> = itemDate.split("-")
+        val dateYear = fullDate[0].toInt()
+        val dateMonth = fullDate[1].toInt()
+        val dateDay = fullDate[2].toInt()
+
+        transaction {
+            Daily_tracking.deleteWhere { (Daily_tracking.date eq LocalDate.of(dateYear,dateMonth,dateDay) and (Daily_tracking.user_id eq userId)) }
+        Toast.makeText(context,"Successfully deleted",Toast.LENGTH_LONG).show()
+        }
+    }
 }
 
 

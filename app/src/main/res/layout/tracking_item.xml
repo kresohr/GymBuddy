@@ -1,42 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:gravity="top">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:orientation="horizontal">
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         app:cardElevation="5dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="horizontal"
+            android:padding="3dp">
 
-            <TextView
-                android:id="@+id/lblTrackingItem"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Entry 1"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                />
-            <TextView
-                android:id="@+id/lblPracenjeDatum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="22/01/2022"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/lblTrackingWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Weight: "
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textSize="20dp" />
 
+                    <TextView
+                        android:id="@+id/txtTrackingItemWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="95.05 KG"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblTrackingCalories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Calories: "
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/txtTrackingItemCalories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1089 Kcal"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/lblTrackingItemDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="22/01/2022"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btnTrackingItemDelete"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="60dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_trash" />
         </LinearLayout>
-
     </com.google.android.material.card.MaterialCardView>
 
 

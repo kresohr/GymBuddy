@@ -11,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.ikresimir.gymbuddy.R
-import com.ikresimir.gymbuddy.model.GoalProfile
 import com.ikresimir.gymbuddy.viewmodel.GoalsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -46,14 +45,21 @@ class GoalsActivity : AppCompatActivity() {
         radioBtnEasy = findViewById(R.id.radioBtnEasyActivity)
         radioBtnMedium = findViewById(R.id.radioBtnMidActivity)
         radioBtnIntensive = findViewById(R.id.radioBtnIntensiveActivity)
+        var btnMenu: Button = findViewById(R.id.btnGoalMenu)
 
         val calendar = Calendar.getInstance()
         setStartingDate(calendar)
 
-        btnSetGoal.setOnClickListener {
-            checkData(goalsViewModel)
+        btnMenu.setOnClickListener {
             val intent = Intent(this, MenuActivity::class.java)
             this.startActivity(intent)
+        }
+
+        btnSetGoal.setOnClickListener {
+            checkData(goalsViewModel)
+            val intent = Intent(this, CalorieCalculationActivity::class.java)
+            this.startActivity(intent)
+            finish()
         }
 
     }

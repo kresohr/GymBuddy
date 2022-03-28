@@ -47,7 +47,7 @@ class CalorieCalculationActivity : AppCompatActivity() {
         var lblLightWeightResult = findViewById<TextView>(R.id.lblLightWeightResult)
         var lblNormalWeightResult = findViewById<TextView>(R.id.lblNormalWeightResult)
         var lblIntensiveWeightResult = findViewById<TextView>(R.id.lblIntensiveWeightResult)
-
+        var btnMenu: Button = findViewById(R.id.btnCalculatorMenu)
 
         calorieCalculatorViewModel = CalorieCalculationViewModel()
         endDate = ""
@@ -62,7 +62,11 @@ class CalorieCalculationActivity : AppCompatActivity() {
             calorieCalculatorViewModel.newGoal(this, endDate)
             val intent = Intent(this, GoalsActivity::class.java)
             this.startActivity(intent)
+        }
 
+        btnMenu.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            this.startActivity(intent)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.ikresimir.gymbuddy
 
+import com.ikresimir.gymbuddy.Goal.references
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.javatime.date
 import java.time.LocalDate
@@ -28,5 +29,13 @@ object Goal : Table(){
     val user_id: Column<Int> = integer("user_id").references(User.id)
 
     override val primaryKey = PrimaryKey(id, name="goal_pk")
+}
+
+object Daily_tracking : Table(){
+    val id: Column<Int> = integer("id").autoIncrement()
+    val date: Column<LocalDate> = date("date")
+    val weight: Column<Double> = double("weight")
+    val calories: Column<Int> = integer("calories")
+    val user_id: Column<Int> = integer("user_id").references(User.id)
 }
 

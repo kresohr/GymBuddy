@@ -19,7 +19,7 @@ class GoalsViewModel: ViewModel() {
     }
 
     fun checkIfGoalExists(context: Context): Boolean{
-        goalData = repository.getGoalInformation(context)
+        /* goalData = repository.getGoalInformation(context)
         for (goal in goalData){
             activity_level = goal.activity_level
             desiredWeight = goal.desiredWeight
@@ -29,6 +29,7 @@ class GoalsViewModel: ViewModel() {
         if (activity_level == 0 || desiredWeight == 0.0 || goalHasEnded){
             return false
         }
-        return true
+        return true */
+        return repository.checkIfGoalExists(context)
     }
 }

@@ -29,7 +29,8 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="40dp"
         android:gravity="center"
-        android:hint="Desired weight">
+        android:hint="Desired weight"
+        app:startIconDrawable="@drawable/ic_weight">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtDesiredWeight"
@@ -96,6 +97,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="100dp"
-        android:text="SET GOAL" />
+        android:text="SET GOAL"
+        android:drawableLeft="@drawable/ic_plus"/>
+    <Button
+        android:id="@+id/btnGoalMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:text="home"
+        android:drawableLeft="@drawable/ic_home"/>
 
 </LinearLayout>
