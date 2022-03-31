@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.StrictMode
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import com.ikresimir.gymbuddy.R
 import com.ikresimir.gymbuddy.viewmodel.MenuViewModel
 
@@ -16,6 +17,7 @@ private lateinit var btnMenuGoals: Button
 private lateinit var btnMenuBMICalculator: Button
 private lateinit var menuViewModel: MenuViewModel
 class MenuActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -31,6 +33,7 @@ class MenuActivity : AppCompatActivity() {
         btnMenuBMICalculator = findViewById(R.id.btnMenuBMICalculator)
         var btnMenuLogout = findViewById<Button>(R.id.btnMenuLogout)
         menuViewModel = MenuViewModel()
+        menuViewModel.test()
 
         btnMenuEditProfile.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)

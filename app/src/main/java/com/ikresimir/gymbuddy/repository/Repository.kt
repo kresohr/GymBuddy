@@ -7,14 +7,14 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.ikresimir.gymbuddy.Daily_tracking
-import com.ikresimir.gymbuddy.Goal
+import com.ikresimir.gymbuddy.*
 import com.ikresimir.gymbuddy.model.GoalProfile
-import com.ikresimir.gymbuddy.User
 import com.ikresimir.gymbuddy.model.TrackingProfile
 import com.ikresimir.gymbuddy.model.UserProfile
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 import java.time.LocalDate
@@ -412,6 +412,36 @@ class Repository {
         Toast.makeText(context,"Successfully deleted",Toast.LENGTH_LONG).show()
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun test(){
+        /*
+        Testing raw Import & Select SQL statements as Jetbrains Exposed doesn't support JSON.
+         */
+
+        //Test Values
+        val date = LocalDate.of(2022,1,1)
+        val userId = 31
+        val json = Json.encodeToString(UserProfile("test",20,190.0,180.0,"m",22.0))
+        transaction {
+            exec("INSERT INTO training(user_id,date,exercise_list) VALUES($userId,'$date','$json')")
+            val result = arrayListOf<String>()
+            TransactionManager.current().exec("SELECT exercise_list FROM training WHERE user_id=31") { rs ->
+                while (rs.next()) {
+                    result += rs.getString("exercise_list")
+                    //val test = Json.decodeFromString<UserProfile>(rs.getString("exercise_list"))
+                }
+                result
+            }
+            //val jsontest = Json.decodeFromString<UserProfile>(result[1])
+            for (user in result){
+                println(user)
+            }
+        }
+
+
+    }
+
 }
 
 

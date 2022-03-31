@@ -1,8 +1,5 @@
 package com.ikresimir.gymbuddy
 
-import com.ikresimir.gymbuddy.Daily_tracking.autoIncrement
-import com.ikresimir.gymbuddy.Daily_tracking.references
-import com.ikresimir.gymbuddy.Goal.references
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.javatime.date
 import java.time.LocalDate
@@ -41,9 +38,13 @@ object Daily_tracking : Table(){
     val user_id: Column<Int> = integer("user_id").references(User.id)
 }
 
-object Training : Table(){
-    val id: Column<Int> = integer("id").autoIncrement()
-    val date: Column<LocalDate> = date("date")
-    val user_id: Column<Int> = integer("user_id").references(User.id)
-}
+
+// Training table will be accessed via raw SQL queries as Jetbrains Exposed doesn't support JSON/JSONB format at this moment.
+
+
+
+
+
+
+
 
