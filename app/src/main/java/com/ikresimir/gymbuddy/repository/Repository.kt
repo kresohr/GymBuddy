@@ -8,9 +8,8 @@ import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.ikresimir.gymbuddy.*
-import com.ikresimir.gymbuddy.model.GoalProfile
-import com.ikresimir.gymbuddy.model.TrackingProfile
-import com.ikresimir.gymbuddy.model.UserProfile
+import com.ikresimir.gymbuddy.model.*
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
@@ -413,6 +412,7 @@ class Repository {
         }
     }
 
+    /*
     @RequiresApi(Build.VERSION_CODES.O)
     fun test(){
         /*
@@ -426,7 +426,7 @@ class Repository {
         transaction {
             exec("INSERT INTO training(user_id,date,exercise_list) VALUES($userId,'$date','$json')")
             val result = arrayListOf<String>()
-            TransactionManager.current().exec("SELECT exercise_list FROM training WHERE user_id=31") { rs ->
+            TransactionManager.current().exec("SELECT exercise_list FROM training WHERE user_id=$userId") { rs ->
                 while (rs.next()) {
                     result += rs.getString("exercise_list")
                     //val test = Json.decodeFromString<UserProfile>(rs.getString("exercise_list"))
@@ -440,6 +440,41 @@ class Repository {
         }
 
 
+    }
+    */
+
+    fun saveTraining(userId: Int,date: LocalDate,jsonString: String){
+        transaction {
+            exec("INSERT INTO training(user_id,date,exercise_list) VALUES($userId,'$date','$jsonString')")
+        }
+    }
+
+    fun getTrainingList(context: Context){
+        getLoggedInUser(context)
+        var userId = 0
+        val result = arrayListOf<TrainingProfile>()
+        transaction {
+            for (user in User.select{
+                (User.username eq currentUser)
+            }){
+                userId = user[User.id]
+            }
+        }
+        transaction {
+
+            TransactionManager.current().exec("SELECT * FROM training WHERE user_id=$userId") { rs ->
+                while (rs.next()) {
+                    val jsonToList = Json.decodeFromString<MutableList<Exercise>>(rs.getString("exercise_list"))
+                    result.add(TrainingProfile(rs.getString("date"),rs.getString("name"),jsonToList))
+                }
+                result
+            }
+            for (item in result){
+                for (singleItem in item.exerciseList){
+                    println(singleItem.exerciseName)
+                }
+            }
+        }
     }
 
 }

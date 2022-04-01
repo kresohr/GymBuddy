@@ -16,10 +16,6 @@ class MenuViewModel: ViewModel() {
     fun logout(context: Context){
         repository.logout(context)
     }
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun test(){
-        repository.test()
-    }
 
     fun checkIfLogged(context: Context): Boolean{
         repository.getLoggedInUser(context)

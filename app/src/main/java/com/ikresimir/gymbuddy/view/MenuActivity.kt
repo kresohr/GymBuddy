@@ -33,7 +33,6 @@ class MenuActivity : AppCompatActivity() {
         btnMenuBMICalculator = findViewById(R.id.btnMenuBMICalculator)
         var btnMenuLogout = findViewById<Button>(R.id.btnMenuLogout)
         menuViewModel = MenuViewModel()
-        menuViewModel.test()
 
         btnMenuEditProfile.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)

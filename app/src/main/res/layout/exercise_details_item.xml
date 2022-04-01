@@ -21,21 +21,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SET 1"
+                android:gravity="left"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:layout_weight="1"
                 />
             <TextView
-                android:id="@+id/lblPonavljanjaItem"
+                android:id="@+id/lblRepsItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5"
+                android:text="Reps: 5"
+                android:gravity="center"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:layout_weight="2"
                 />
             <TextView
-                android:id="@+id/lblKilazaItem"
+                android:id="@+id/lblWeightItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="20KG"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:layout_weight="1"
