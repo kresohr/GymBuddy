@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ikresimir.gymbuddy.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SingleTrainingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +20,15 @@ class SingleTrainingActivity : AppCompatActivity() {
         var btnAddExercise: Button = findViewById(R.id.btnAddExercise)
         var btnCompleteTrainingEntry: Button = findViewById(R.id.btnCompleteTrainingEntry)
 
+        val calendar = Calendar.getInstance()
+        setStartingDate(calendar, txtTodayDate)
         btnAddExercise.setOnClickListener {  }
         btnCompleteTrainingEntry.setOnClickListener {  }
+    }
+
+    private fun setStartingDate(calendar: Calendar, txtTodayDate: TextView){
+        val dateFormat = "yyyy-MM-dd"
+        val formatDate = SimpleDateFormat (dateFormat)
+        txtTodayDate.text = formatDate.format(calendar.time)
     }
 }

@@ -14,7 +14,6 @@ class AddingExercisesActivity : AppCompatActivity() {
 
         var txtExerciseName: TextView = findViewById(R.id.txtExerciseName)
         var recyclerView: RecyclerView = findViewById(R.id.recyclerViewExerciseDetailsList)
-        var txtExerciseSet: TextView = findViewById(R.id.txtExerciseSet)
         var txtExerciseReps: TextView = findViewById(R.id.txtExerciseReps)
         var txtExerciseWeight: TextView = findViewById(R.id.txtExerciseWeight)
         var btnAddExerciseToList: Button = findViewById(R.id.btnAddExerciseToList)

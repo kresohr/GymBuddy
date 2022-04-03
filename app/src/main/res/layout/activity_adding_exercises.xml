@@ -36,53 +36,37 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewExerciseDetailsList"
         android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="5dp"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp"
+        android:padding="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
-            android:gravity="left"
-            android:hint="Set">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtExerciseSet"
-                android:inputType="numberDecimal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:enabled="false"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="20dp"
-            android:gravity="left"
-            android:hint="Reps.">
+            android:hint="Reps"
+            android:layout_weight="2">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtExerciseReps"
                 android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center" />
+                android:gravity="center"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
-            android:gravity="left"
-            android:hint="KG">
+            android:hint="KG"
+            android:layout_weight="2">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtExerciseWeight"
@@ -90,15 +74,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:enabled="false"/>
+                android:enabled="false"
+                android:layout_weight="2"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnAddExerciseToList"
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_marginLeft="10dp"
-            android:text="ADD" />
+            android:layout_marginHorizontal="10dp"
+            android:text="ADD"
+            android:gravity="center"
+            android:drawableLeft="@drawable/ic_plus"
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <Button

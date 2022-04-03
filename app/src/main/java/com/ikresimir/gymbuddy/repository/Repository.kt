@@ -443,9 +443,18 @@ class Repository {
     }
     */
 
-    fun saveTraining(userId: Int,date: LocalDate,jsonString: String){
+    fun saveTraining(context: Context,trainingName: String,date: String,exerciseListJson: String){
+        getLoggedInUser(context)
+        var userId = 0
         transaction {
-            exec("INSERT INTO training(user_id,date,exercise_list) VALUES($userId,'$date','$jsonString')")
+            for (user in User.select{
+                (User.username eq currentUser)
+            }){
+                userId = user[User.id]
+            }
+        }
+        transaction {
+            exec("INSERT INTO training(user_id,date,name,exercise_list) VALUES($userId,'$date','$trainingName','$exerciseListJson')")
         }
     }
 
