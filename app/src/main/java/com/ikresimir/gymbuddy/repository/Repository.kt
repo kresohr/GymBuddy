@@ -443,9 +443,16 @@ class Repository {
     }
     */
 
-    fun saveTraining(context: Context,trainingName: String,date: String,exerciseListJson: String){
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun saveTraining(context: Context, singleTrainingProfile: TrainingProfile){
         getLoggedInUser(context)
         var userId = 0
+        val stringDate: List<String> = singleTrainingProfile.date.split("-")
+        val dateYear = stringDate[0].toInt()
+        val dateMonth = stringDate[1].toInt()
+        val dateDay = stringDate[2].toInt()
+        val finalDate = LocalDate.of(dateYear,dateMonth,dateDay)
+        val jsonList = Json.encodeToString(singleTrainingProfile.exerciseList)
         transaction {
             for (user in User.select{
                 (User.username eq currentUser)
@@ -454,11 +461,11 @@ class Repository {
             }
         }
         transaction {
-            exec("INSERT INTO training(user_id,date,name,exercise_list) VALUES($userId,'$date','$trainingName','$exerciseListJson')")
+            exec("INSERT INTO training(user_id,date,name,exercise_list) VALUES($userId,'$finalDate','$singleTrainingProfile.name','$jsonList')")
         }
     }
 
-    fun getTrainingList(context: Context){
+    fun getTrainingList(context: Context): ArrayList<TrainingProfile>{
         getLoggedInUser(context)
         var userId = 0
         val result = arrayListOf<TrainingProfile>()
@@ -478,12 +485,10 @@ class Repository {
                 }
                 result
             }
-            for (item in result){
-                for (singleItem in item.exerciseList){
-                    println(singleItem.exerciseName)
-                }
-            }
+
         }
+
+        return result
     }
 
 }
