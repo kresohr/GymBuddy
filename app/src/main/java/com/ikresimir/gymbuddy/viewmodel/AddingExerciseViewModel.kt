@@ -13,6 +13,10 @@ class AddingExerciseViewModel:ViewModel() {
         list.add(ExerciseDetails(reps,weight))
     }
 
+    fun deleteFromList(){
+
+    }
+
     fun exerciseToJson(exerciseName: String): String{
         var exercise = Exercise(exerciseName,list)
         return Json.encodeToString(exercise)

@@ -32,7 +32,6 @@
         <activity android:name=".view.CalorieCalculationActivity" />
         <activity android:name=".view.AddingExercisesActivity" />
         <activity android:name=".view.SingleTrainingActivity" />
-        <activity android:name=".view.EntryListActivity" />
         <activity android:name=".view.SingleTrackingActivity" />
         <activity android:name=".view.MenuActivity" />
         <activity android:name=".view.GoalsActivity" />

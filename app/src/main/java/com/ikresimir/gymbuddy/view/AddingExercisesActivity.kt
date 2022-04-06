@@ -26,11 +26,12 @@ class AddingExercisesActivity : AppCompatActivity() {
             viewModel.addToList(txtExerciseReps.text.toString().toInt(),txtExerciseWeight.text.toString().toDouble())
         }
         btnEndExerciseEntry.setOnClickListener {
+            //Set MAXIMUM 50 character length for exercise name.
             var result = viewModel.exerciseToJson(txtExerciseName.text.toString())
             val intent = Intent()
             intent.putExtra("Exercise",result)
-            setResult(1,intent)
-            finish()
+            this.setResult(1,intent)
+            this.finish()
         }
 
     }

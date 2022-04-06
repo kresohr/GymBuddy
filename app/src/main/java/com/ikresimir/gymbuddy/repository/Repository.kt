@@ -398,6 +398,35 @@ class Repository {
 
         return listOfTrackedItems
     }
+    fun getExerciseList(context: Context, id: Int) : MutableList<Exercise>{
+        getLoggedInUser(context)
+        var userId = 0
+        var result = mutableListOf<Exercise>()
+
+        transaction {
+            for (user in User.select{
+                (User.username eq currentUser)
+            }){
+                userId = user[User.id]
+            }
+        }
+        transaction {
+
+            TransactionManager.current().exec("SELECT * FROM training WHERE (user_id=$userId AND id=$id)") { rs ->
+                while (rs.next()) {
+                    if ((rs.getString("exercise_list")) != "{}"){
+                        val jsonToList = Json.decodeFromString<MutableList<Exercise>>(rs.getString("exercise_list"))
+                        result = jsonToList
+                    }
+
+                }
+                result
+            }
+
+        }
+
+        return result
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun deleteFromTrackingList(itemDate: String, userId: Int, context: Context){
@@ -444,15 +473,20 @@ class Repository {
     */
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun saveTraining(context: Context, singleTrainingProfile: TrainingProfile){
+    fun saveTraining(context: Context, date: String, name: String, exerciseList: MutableList<Exercise>){
         getLoggedInUser(context)
         var userId = 0
-        val stringDate: List<String> = singleTrainingProfile.date.split("-")
+        val stringDate: List<String> = date.split("-")
         val dateYear = stringDate[0].toInt()
         val dateMonth = stringDate[1].toInt()
         val dateDay = stringDate[2].toInt()
         val finalDate = LocalDate.of(dateYear,dateMonth,dateDay)
-        val jsonList = Json.encodeToString(singleTrainingProfile.exerciseList)
+        val trainingName = name
+        var jsonList = Json.encodeToString(exerciseList)
+        if (jsonList == "[]"){
+            jsonList = "{}"
+        }
+
         transaction {
             for (user in User.select{
                 (User.username eq currentUser)
@@ -461,7 +495,34 @@ class Repository {
             }
         }
         transaction {
-            exec("INSERT INTO training(user_id,date,name,exercise_list) VALUES($userId,'$finalDate','$singleTrainingProfile.name','$jsonList')")
+            exec("INSERT INTO training(user_id,date,name,exercise_list) VALUES($userId,'$finalDate','$trainingName','$jsonList')")
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updateTraining(context: Context, date: String, name: String, exerciseList: MutableList<Exercise>, trainingId: Int){
+        getLoggedInUser(context)
+        var userId = 0
+        val stringDate: List<String> = date.split("-")
+        val dateYear = stringDate[0].toInt()
+        val dateMonth = stringDate[1].toInt()
+        val dateDay = stringDate[2].toInt()
+        val finalDate = LocalDate.of(dateYear,dateMonth,dateDay)
+        val trainingName = name
+        var jsonList = Json.encodeToString(exerciseList)
+        if (jsonList == "[]"){
+            jsonList = "{}"
+        }
+
+        transaction {
+            for (user in User.select{
+                (User.username eq currentUser)
+            }){
+                userId = user[User.id]
+            }
+        }
+        transaction {
+            exec("UPDATE training SET exercise_list='$jsonList', name='$name' WHERE id=$trainingId")
         }
     }
 
@@ -469,6 +530,7 @@ class Repository {
         getLoggedInUser(context)
         var userId = 0
         val result = arrayListOf<TrainingProfile>()
+        val emptyList = mutableListOf<Exercise>()
         transaction {
             for (user in User.select{
                 (User.username eq currentUser)
@@ -480,8 +542,14 @@ class Repository {
 
             TransactionManager.current().exec("SELECT * FROM training WHERE user_id=$userId") { rs ->
                 while (rs.next()) {
-                    val jsonToList = Json.decodeFromString<MutableList<Exercise>>(rs.getString("exercise_list"))
-                    result.add(TrainingProfile(rs.getString("date"),rs.getString("name"),jsonToList))
+                    if ((rs.getString("exercise_list")) == "{}"){
+                        result.add(TrainingProfile(rs.getString("id").toInt(),rs.getString("date"),rs.getString("name"),emptyList))
+                    }
+                    else{
+                        val jsonToList = Json.decodeFromString<MutableList<Exercise>>(rs.getString("exercise_list"))
+                        result.add(TrainingProfile(rs.getString("id").toInt(),rs.getString("date"),rs.getString("name"),jsonToList))
+                    }
+
                 }
                 result
             }

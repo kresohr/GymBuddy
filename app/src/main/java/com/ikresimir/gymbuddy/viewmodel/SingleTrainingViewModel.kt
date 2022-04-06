@@ -12,18 +12,34 @@ import kotlinx.serialization.json.Json
 
 class SingleTrainingViewModel(val date: String): ViewModel() {
     val repository = Repository()
-    val exerciseList = mutableListOf<Exercise>()
-    var trainingProfile = TrainingProfile(date,"",exerciseList)
+    var exerciseList = mutableListOf<Exercise>()
+    var existingProfile = false
+    var trainingId = 0
+    var existingDate = ""
+    var trainingName = ""
 
+
+    fun checkIfExisting(existingTraining: TrainingProfile){
+        if (existingTraining.trainingName != ""){
+            existingProfile = true
+            exerciseList = existingTraining.exerciseList
+            trainingId = existingTraining.trainingId
+            existingDate = existingTraining.date
+            trainingName = existingTraining.trainingName
+        }
+    }
 
     // Training object should be complete once "saveTraining" is selected as that's triggered with "Done" button.
     @RequiresApi(Build.VERSION_CODES.O)
-    fun saveTraining(context: Context, trainingName: String, date: String){
-        trainingProfile.trainingName = trainingName
-        repository.saveTraining(context, trainingProfile)
+    fun saveTraining(context: Context, trainingName: String){
+        repository.saveTraining(context, date, trainingName, exerciseList)
     }
-    fun addToList(context: Context, exercise: String){
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updateTraining(context: Context, trainingName: String, trainingId: Int){
+        repository.updateTraining(context, date, trainingName, exerciseList, trainingId)
+    }
+    fun addToList(exercise: String){
         val exerciseFromJson = Json.decodeFromString<Exercise>(exercise)
-        trainingProfile.exerciseList.add(exerciseFromJson)
+        exerciseList.add(exerciseFromJson)
     }
 }

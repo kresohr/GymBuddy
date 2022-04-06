@@ -3,41 +3,59 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:gravity="top">
+    android:orientation="horizontal">
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         app:cardElevation="5dp">
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:layout_height="wrap_content">
 
             <TextView
+                android:paddingLeft="16dp"
+
                 android:id="@+id/lblExerciseParentNameItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Exercise name 1"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                />
-            <TextView
-                android:id="@+id/lblExerciseParentTotalSets"
+                android:layout_width="280dp"
+                android:layout_height="35dp"
+                android:textSize="14dp"
+                android:text="Dumbbell Press Chest Test Dumbbell Press Chest Test"
+                android:textAppearance="?attr/textAppearanceHeadline6"/>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="4dp">
+            <TextView
+                android:textColor="@color/light_gray"
+                android:id="@+id/lblExerciseParentTotalSets"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="left"
                 android:text="Total sets: 20"
+                android:textSize="14sp"
                 android:textAppearance="?attr/textAppearanceHeadline6"
+                android:paddingLeft="16dp"
+                android:paddingBottom="16dp"
+                android:layout_weight="1"
                 />
-
-
+                <TextView
+                    android:id="@+id/lblExerciseParentTotalWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="left"
+                    android:text="Total weight: 100.00KG"
+                    android:textSize="14sp"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:paddingLeft="16dp"
+                    android:paddingBottom="16dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/light_gray"/>
 
 
         </LinearLayout>
-
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
-
 </LinearLayout>
