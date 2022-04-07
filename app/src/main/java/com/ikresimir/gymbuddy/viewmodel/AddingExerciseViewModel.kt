@@ -18,7 +18,7 @@ class AddingExerciseViewModel:ViewModel() {
     }
 
     fun exerciseToJson(exerciseName: String): String{
-        var exercise = Exercise(exerciseName,list)
+        val exercise = Exercise(exerciseName,list)
         return Json.encodeToString(exercise)
     }
 }

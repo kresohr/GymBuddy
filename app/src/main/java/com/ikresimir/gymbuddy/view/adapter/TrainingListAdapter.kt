@@ -34,6 +34,7 @@ class TrainingListAdapter (private val trainingList: MutableList<TrainingProfile
             holder.lblTrainingNameItem.text = currentItem.trainingName
             holder.lblTrainingDateItem.text = currentItem.date
 
+            // Switch for callback
             holder.lblTrainingNameItem.setOnClickListener {
                 val intent = Intent(context, SingleTrainingActivity::class.java)
                 intent.putExtra("Training", serializeObject)

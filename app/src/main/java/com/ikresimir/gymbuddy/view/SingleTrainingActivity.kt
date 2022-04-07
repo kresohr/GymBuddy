@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,12 +27,12 @@ class SingleTrainingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_single_training)
 
-        var txtDate: TextView = findViewById(R.id.txtCurrentDateSingleTraining)
-        var txtTrainingName: TextView = findViewById(R.id.txtSingleTrainingName)
-        var btnAddExercise: Button = findViewById(R.id.btnAddExercise)
-        var btnCompleteTrainingEntry: Button = findViewById(R.id.btnCompleteTrainingEntry)
-        var recyclerView: RecyclerView = findViewById(R.id.recyclerViewExerciseList)
-
+        val txtDate: TextView = findViewById(R.id.txtCurrentDateSingleTraining)
+        val txtTrainingName: TextView = findViewById(R.id.txtSingleTrainingName)
+        val btnAddExercise: Button = findViewById(R.id.btnAddExercise)
+        val btnCompleteTrainingEntry: Button = findViewById(R.id.btnCompleteTrainingEntry)
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewExerciseList)
+        var exerciseProfile: Exercise
         val calendar = Calendar.getInstance()
         setStartingDate(calendar, txtDate)
         var trainingProfile = TrainingProfile(-1,"","",mutableListOf<Exercise>())
@@ -39,28 +40,29 @@ class SingleTrainingActivity : AppCompatActivity() {
         val getObjectFromRecyclerOnClick =
             intent.getSerializableExtra("Training")
         if (getObjectFromRecyclerOnClick != null){
-            trainingProfile = Json.decodeFromString<TrainingProfile>(getObjectFromRecyclerOnClick as String)
+            trainingProfile = Json.decodeFromString(getObjectFromRecyclerOnClick as String)
             checkIfExisting(txtDate,txtTrainingName,trainingProfile, viewModel)
         }
 
-
-        val activityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result ->
-                if (result.resultCode == 1) {
-                    val intent = result.data
-                    if (intent != null) {
-                        var jsonExercise = intent.getStringExtra("Exercise")
-                        if (jsonExercise != null) {
-                            viewModel.addToList(jsonExercise)
-                        }
-                    }
-                }
-        }
-
         //RecyclerView Items
-        val listOfTrackedItems = viewModel.exerciseList
+        var listOfTrackedItems = viewModel.exerciseList
         val trackingListAdapter = SingleTrainingAdapter(listOfTrackedItems, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = trackingListAdapter
+
+        val activityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result ->
+            if (result.resultCode == 1) {
+                val intent = result.data
+                if (intent != null) {
+                    val jsonExercise = intent.getStringExtra("Exercise")
+                    if (jsonExercise != null) {
+                        viewModel.addToList(jsonExercise)
+                        recyclerView.adapter?.notifyDataSetChanged()
+                    }
+                }
+            }
+
+        }
 
         btnAddExercise.setOnClickListener {
             val intent = Intent(this,AddingExercisesActivity::class.java)
@@ -68,13 +70,31 @@ class SingleTrainingActivity : AppCompatActivity() {
         }
 
         btnCompleteTrainingEntry.setOnClickListener {
-            if(trainingProfile.trainingId==-1){
-                viewModel.saveTraining(this, txtTrainingName.text.toString())
-            }
-            else{
-                viewModel.updateTraining(this, txtTrainingName.text.toString(),trainingProfile.trainingId)
-            }
+            val intent = Intent()
+            // Provjerit dal ovo treba
+            intent.putExtra("Training", "New")
+            if (trainingProfile.trainingId == -1) {
+                if (txtTrainingName.text.isNotEmpty()) {
+                    viewModel.saveTraining(this, txtTrainingName.text.toString())
+                    this.setResult(2, intent)
+                    this.finish()
+                } else {
+                    Toast.makeText(this, "Name cannot be empty!", Toast.LENGTH_SHORT).show()
+                }
 
+            }
+            else {
+                if (txtTrainingName.text.isNotEmpty()) {
+                    viewModel.updateTraining(this, txtTrainingName.text.toString(), trainingProfile.trainingId)
+                        this.setResult(2, intent)
+                        this.finish()
+                }
+                else{
+                    Toast.makeText(this,"Name cannot be empty!",Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
         }
     }
 
@@ -90,5 +110,11 @@ class SingleTrainingActivity : AppCompatActivity() {
             txtDate.text = viewModel.existingDate
             txtTrainingName.text = viewModel.trainingName
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+
     }
 }

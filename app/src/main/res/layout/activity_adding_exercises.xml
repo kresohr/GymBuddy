@@ -37,7 +37,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="5dp"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="330dp"
         android:padding="10dp"/>
 
     <LinearLayout
@@ -54,7 +54,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtExerciseReps"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"/>
