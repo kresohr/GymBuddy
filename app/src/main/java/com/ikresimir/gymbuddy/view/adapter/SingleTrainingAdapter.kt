@@ -17,7 +17,7 @@ import com.ikresimir.gymbuddy.view.SingleTrainingActivity
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class SingleTrainingAdapter(private val exerciseList: MutableList<Exercise>, val context: Context) : RecyclerView.Adapter<SingleTrainingAdapter.ItemViewHolder>() {
+class SingleTrainingAdapter(private val adapterOnClick : (Any) -> Unit,private val exerciseList: MutableList<Exercise>, val context: Context) : RecyclerView.Adapter<SingleTrainingAdapter.ItemViewHolder>() {
         class ItemViewHolder (itemView: View): RecyclerView.ViewHolder(itemView){
             val lblExerciseParentNameItem: TextView = itemView.findViewById(R.id.lblExerciseParentNameItem)
             val lblExerciseParentTotalSets: TextView = itemView.findViewById(R.id.lblExerciseParentTotalSets)
@@ -44,15 +44,27 @@ class SingleTrainingAdapter(private val exerciseList: MutableList<Exercise>, val
             holder.lblExerciseParentTotalSets.text = "Total sets: $numberOfSets"
             holder.lblExerciseParentTotalWeight.text = "Total weight: $totalWeight KG"
 
+
             // Switch for callback
             holder.lblExerciseParentNameItem.setOnClickListener {
-                val intent = Intent(context, AddingExercisesActivity::class.java)
+                adapterOnClick(position)
+                /*val intent = Intent(context, AddingExercisesActivity::class.java)
                 intent.putExtra("ExerciseDetails", serializeObject)
-                context.startActivity(intent)
+                context.startActivity(intent)*/
             }
 
 
         }
+
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?){
+            adapterOnClick(adapterPosition)
+        }
+    }
 
         override fun getItemCount(): Int {
             return exerciseList.size

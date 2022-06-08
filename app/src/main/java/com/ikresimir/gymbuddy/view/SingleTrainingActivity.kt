@@ -46,7 +46,7 @@ class SingleTrainingActivity : AppCompatActivity() {
 
         //RecyclerView Items
         var listOfTrackedItems = viewModel.exerciseList
-        val trackingListAdapter = SingleTrainingAdapter(listOfTrackedItems, this)
+        val trackingListAdapter = SingleTrainingAdapter(this,listOfTrackedItems, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = trackingListAdapter
 
