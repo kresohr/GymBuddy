@@ -39,7 +39,7 @@ class SingleTrackingActivity : AppCompatActivity() {
             else{
                 when{
                     txtTodaysCalories.text.isEmpty() -> txtTodaysCalories.text= 0.toString()
-                    txtTodaysWeight.text.isEmpty() -> txtTodaysWeight.text = 0.0.toString()
+                    txtTodaysWeight.text.isEmpty() -> txtTodaysWeight.text = 0.toString()
                 }
                 singleTrackingViewModel.saveTrackingData(this, txtTodaysDate.text.toString(),txtTodaysWeight.text.toString().toDouble(),txtTodaysCalories.text.toString().toInt())
             }
