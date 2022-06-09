@@ -56,10 +56,11 @@ class GoalsActivity : AppCompatActivity() {
         }
 
         btnSetGoal.setOnClickListener {
-            checkData(goalsViewModel)
-            val intent = Intent(this, CalorieCalculationActivity::class.java)
-            this.startActivity(intent)
-            finish()
+            if(checkData(goalsViewModel)){
+                val intent = Intent(this, CalorieCalculationActivity::class.java)
+                this.startActivity(intent)
+                finish()
+            }
         }
 
     }
@@ -71,19 +72,27 @@ class GoalsActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun checkData(goalsViewModel: GoalsViewModel){
+    private fun checkData(goalsViewModel: GoalsViewModel): Boolean{
         if (txtDesiredWeight.text.isNotEmpty()){
-            when{
-                radioBtnEasy.isChecked -> rememberGoal(goalsViewModel, 1)
-                radioBtnMedium.isChecked -> rememberGoal(goalsViewModel, 2)
-                radioBtnIntensive.isChecked -> rememberGoal(goalsViewModel, 3)
+            return when{
+                radioBtnEasy.isChecked -> {rememberGoal(goalsViewModel, 1)
+                    true
+                }
+                radioBtnMedium.isChecked -> {rememberGoal(goalsViewModel, 2)
+                    true
+                }
+                radioBtnIntensive.isChecked -> {rememberGoal(goalsViewModel, 3)
+                    true
+                }
                 else->{
                     Toast.makeText(applicationContext, "Intensity has to be selected!", Toast.LENGTH_LONG).show()
+                    false
                 }
             }
         }
         else{
             Toast.makeText(applicationContext, "Desired weight is missing!", Toast.LENGTH_LONG).show()
+            return false
         }
     }
 
