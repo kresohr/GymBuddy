@@ -1,9 +1,11 @@
 package com.ikresimir.gymbuddy.view
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ikresimir.gymbuddy.R
@@ -12,6 +14,7 @@ import com.ikresimir.gymbuddy.view.adapter.TrackingListAdapter
 import com.ikresimir.gymbuddy.viewmodel.TrackingListViewModel
 
 class TrackingListActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tracking_list)
@@ -24,10 +27,10 @@ class TrackingListActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = trackingListAdapter
 
-
         btnNewEntry.setOnClickListener {
             val intent = Intent(this, SingleTrackingActivity::class.java)
             this.startActivity(intent)
+            finish()
         }
     }
 }

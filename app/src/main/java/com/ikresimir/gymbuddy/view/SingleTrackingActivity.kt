@@ -42,6 +42,7 @@ class SingleTrackingActivity : AppCompatActivity() {
                     txtTodaysWeight.text.isEmpty() -> txtTodaysWeight.text = 0.toString()
                 }
                 singleTrackingViewModel.saveTrackingData(this, txtTodaysDate.text.toString(),txtTodaysWeight.text.toString().toDouble(),txtTodaysCalories.text.toString().toInt())
+                finish()
             }
         }
     }
