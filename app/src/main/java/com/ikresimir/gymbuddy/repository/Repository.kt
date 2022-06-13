@@ -350,7 +350,7 @@ class Repository {
                     it[user_id] = userId
                 }
             }
-            Toast.makeText(context,"Saved",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Tracking Data Saved",Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -372,7 +372,7 @@ class Repository {
                 it[calories] = todayCalories
             }
         }
-        Toast.makeText(context,"Saved",Toast.LENGTH_LONG).show()
+        Toast.makeText(context,"Tracking Data Updated",Toast.LENGTH_LONG).show()
     }
 
     fun getTrackingList(context: Context) : MutableList<TrackingProfile>{

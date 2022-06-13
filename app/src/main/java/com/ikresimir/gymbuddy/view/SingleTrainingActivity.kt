@@ -1,6 +1,8 @@
 package com.ikresimir.gymbuddy.view
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,21 +24,29 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SingleTrainingActivity : AppCompatActivity() {
+
+    lateinit var recyclerView: RecyclerView
+    lateinit var viewModel: SingleTrainingViewModel
+    lateinit var updatedExercise: String
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_single_training)
 
+        //UI initialization
         val txtDate: TextView = findViewById(R.id.txtCurrentDateSingleTraining)
         val txtTrainingName: TextView = findViewById(R.id.txtSingleTrainingName)
         val btnAddExercise: Button = findViewById(R.id.btnAddExercise)
         val btnCompleteTrainingEntry: Button = findViewById(R.id.btnCompleteTrainingEntry)
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewExerciseList)
-        var exerciseProfile: Exercise
+        recyclerView = findViewById(R.id.recyclerViewExerciseList)
+        updatedExercise = ""
+
+        //Get calendar info
         val calendar = Calendar.getInstance()
         setStartingDate(calendar, txtDate)
+
         var trainingProfile = TrainingProfile(-1,"","",mutableListOf<Exercise>())
-        val viewModel = SingleTrainingViewModel(txtDate.text.toString())
+        viewModel = SingleTrainingViewModel(txtDate.text.toString())
         val getObjectFromRecyclerOnClick =
             intent.getSerializableExtra("Training")
         if (getObjectFromRecyclerOnClick != null){
@@ -46,9 +56,11 @@ class SingleTrainingActivity : AppCompatActivity() {
 
         //RecyclerView Items
         var listOfTrackedItems = viewModel.exerciseList
-        val trackingListAdapter = SingleTrainingAdapter(this,listOfTrackedItems, this)
+        val trackingListAdapter = SingleTrainingAdapter(listOfTrackedItems, this, this, viewModel)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = trackingListAdapter
+
+
 
         val activityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result ->
             if (result.resultCode == 1) {
@@ -61,8 +73,8 @@ class SingleTrainingActivity : AppCompatActivity() {
                     }
                 }
             }
-
         }
+
 
         btnAddExercise.setOnClickListener {
             val intent = Intent(this,AddingExercisesActivity::class.java)
@@ -71,15 +83,14 @@ class SingleTrainingActivity : AppCompatActivity() {
 
         btnCompleteTrainingEntry.setOnClickListener {
             val intent = Intent()
-            // Provjerit dal ovo treba
             intent.putExtra("Training", "New")
             if (trainingProfile.trainingId == -1) {
                 if (txtTrainingName.text.isNotEmpty()) {
                     viewModel.saveTraining(this, txtTrainingName.text.toString())
                     this.setResult(2, intent)
-                    this.finish()
+                    finish()
                 } else {
-                    Toast.makeText(this, "Name cannot be empty!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Training name cannot be empty!", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -98,6 +109,7 @@ class SingleTrainingActivity : AppCompatActivity() {
         }
     }
 
+
     private fun setStartingDate(calendar: Calendar, txtTodayDate: TextView){
         val dateFormat = "yyyy-MM-dd"
         val formatDate = SimpleDateFormat (dateFormat)
@@ -110,11 +122,5 @@ class SingleTrainingActivity : AppCompatActivity() {
             txtDate.text = viewModel.existingDate
             txtTrainingName.text = viewModel.trainingName
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-
     }
 }

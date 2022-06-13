@@ -1,5 +1,6 @@
 package com.ikresimir.gymbuddy.view.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -15,7 +16,7 @@ import com.ikresimir.gymbuddy.view.SingleTrainingActivity
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class TrainingListAdapter (private val trainingList: MutableList<TrainingProfile>, val context: Context) : RecyclerView.Adapter<TrainingListAdapter.ItemViewHolder>() {
+class TrainingListAdapter (private val trainingList: MutableList<TrainingProfile>, val context: Context, val activity: Activity) : RecyclerView.Adapter<TrainingListAdapter.ItemViewHolder>() {
         class ItemViewHolder (itemView: View): RecyclerView.ViewHolder(itemView){
             val lblTrainingNameItem: TextView = itemView.findViewById(R.id.lblTrainingNameItem)
             val lblTrainingDateItem: TextView = itemView.findViewById(R.id.lblTrainingDateItem)
@@ -25,6 +26,10 @@ class TrainingListAdapter (private val trainingList: MutableList<TrainingProfile
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.training_item,parent,false)
             return ItemViewHolder(itemView)
         }
+
+    interface onItemClick {
+        fun mClick(v: View?, position: Int)
+    }
 
         @RequiresApi(Build.VERSION_CODES.O)
         override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -38,7 +43,9 @@ class TrainingListAdapter (private val trainingList: MutableList<TrainingProfile
             holder.lblTrainingNameItem.setOnClickListener {
                 val intent = Intent(context, SingleTrainingActivity::class.java)
                 intent.putExtra("Training", serializeObject)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 context.startActivity(intent)
+                activity.finish()
             }
 
         }

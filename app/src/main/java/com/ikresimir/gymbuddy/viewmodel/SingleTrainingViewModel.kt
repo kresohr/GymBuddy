@@ -42,4 +42,10 @@ class SingleTrainingViewModel(val date: String): ViewModel() {
         val exerciseFromJson = Json.decodeFromString<Exercise>(exercise)
         exerciseList.add(exerciseFromJson)
     }
+    fun replaceItem(exercise: String, index: Int){
+       // exerciseList.removeAt(index)
+        val exerciseFromJson = Json.decodeFromString<Exercise>(exercise)
+        //exerciseList.add(exerciseFromJson)
+        exerciseList.set(index, exerciseFromJson)
+    }
 }
