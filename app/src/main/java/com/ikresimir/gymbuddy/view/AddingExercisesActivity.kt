@@ -82,16 +82,14 @@ class AddingExercisesActivity : AppCompatActivity() {
                         this.setResult(3,intent)
                         finish()
                     }
+
                     else{
-                        Toast.makeText(this,"TEST",Toast.LENGTH_SHORT).show()
+                        val result = viewModel.exerciseToJson(txtExerciseName.text.toString())
+                        val intent = Intent()
+                        intent.putExtra("Exercise",result)
+                        this.setResult(1,intent)
+                        finish()
                     }
-//                    else{
-//                        val result = viewModel.exerciseToJson(txtExerciseName.text.toString())
-//                        val intent = Intent()
-//                        intent.putExtra("Exercise",result)
-//                        this.setResult(1,intent)
-//                        finish()
-//                    }
                 }
             }
             else{
