@@ -48,4 +48,7 @@ class SingleTrainingViewModel(val date: String): ViewModel() {
         //exerciseList.add(exerciseFromJson)
         exerciseList.set(index, exerciseFromJson)
     }
+    fun deleteItem(index: Int){
+        exerciseList.removeAt(index)
+    }
 }
