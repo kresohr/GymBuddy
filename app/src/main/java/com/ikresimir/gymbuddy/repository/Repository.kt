@@ -298,11 +298,39 @@ class Repository {
         return goalInformation
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getAllGoals(): MutableList<GoalHistoryProfile>{
+
+        var userId = 0
+        var desiredWeight = 0.0
+        var goalStart = ""
+        var goalEnd = ""
+        var goalHistory = mutableListOf<GoalHistoryProfile>()
+
+        transaction {
+            for (user in User.select{
+                (User.username eq currentUser)
+            }){
+                userId = user[User.id]
+            }
+        }
+        transaction {
+            for (goal in Goal.select { (Goal.user_id eq userId) }){
+                desiredWeight = goal[Goal.desired_weight]
+                goalStart = goal[Goal.goal_start].toString()
+                if (goal[Goal.goal_end]!=null){
+                    goalEnd = goal[Goal.goal_end].toString()
+                    goalHistory.add(GoalHistoryProfile(desiredWeight,goalStart,goalEnd))
+                }
+            }
+        }
+    return goalHistory
+    }
+
     fun checkIfGoalExists(context: Context): Boolean{
         getLoggedInUser(context)
         var userId = 0
         var found = false
-
         transaction {
             for (user in User.select { (User.username eq currentUser) }) {
                 userId = user[User.id]
@@ -498,7 +526,6 @@ class Repository {
             exec("INSERT INTO training(user_id,date,name,exercise_list) VALUES($userId,'$finalDate','$trainingName','$jsonList')")
         }
     }
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun updateTraining(context: Context, date: String, name: String, exerciseList: MutableList<Exercise>, trainingId: Int){
         getLoggedInUser(context)
@@ -525,7 +552,6 @@ class Repository {
             exec("UPDATE training SET exercise_list='$jsonList', name='$name' WHERE id=$trainingId")
         }
     }
-
     fun getTrainingList(context: Context): ArrayList<TrainingProfile>{
         getLoggedInUser(context)
         var userId = 0
@@ -543,11 +569,11 @@ class Repository {
             TransactionManager.current().exec("SELECT * FROM training WHERE user_id=$userId") { rs ->
                 while (rs.next()) {
                     if ((rs.getString("exercise_list")) == "{}"){
-                        result.add(TrainingProfile(rs.getString("id").toInt(),rs.getString("date"),rs.getString("name"),emptyList))
+                        result.add(TrainingProfile(rs.getString("id").toInt(),rs.getString("date"),rs.getString("name"),emptyList,rs.getBoolean("training_done")))
                     }
                     else{
                         val jsonToList = Json.decodeFromString<MutableList<Exercise>>(rs.getString("exercise_list"))
-                        result.add(TrainingProfile(rs.getString("id").toInt(),rs.getString("date"),rs.getString("name"),jsonToList))
+                        result.add(TrainingProfile(rs.getString("id").toInt(),rs.getString("date"),rs.getString("name"),jsonToList,rs.getBoolean("training_done")))
                     }
 
                 }
@@ -557,6 +583,11 @@ class Repository {
         }
 
         return result
+    }
+    fun markTrainingAsDone(trainingId: Int){
+        transaction {
+            exec("UPDATE training SET training_done='true' WHERE id=$trainingId")
+        }
     }
 
 }

@@ -8,7 +8,8 @@ data class TrainingProfile(
     var trainingId: Int,
     var date: String,
     var trainingName: String,
-    var exerciseList: MutableList<Exercise>
+    var exerciseList: MutableList<Exercise>,
+    var isDone: Boolean
 ) {
 
 }

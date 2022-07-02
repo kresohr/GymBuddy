@@ -39,6 +39,10 @@ class TrainingListActivity : AppCompatActivity(), TrainingListAdapter.onItemClic
                 }
         }
 
+        fun markTrainingAsDone(trainingId: Int){
+            viewModel.markTrainingAsDone(trainingId)
+        }
+
         btnNewTraining.setOnClickListener {
             val intent = Intent(this,SingleTrainingActivity::class.java)
             activityLauncher.launch(intent)

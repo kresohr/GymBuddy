@@ -13,7 +13,10 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.GymBuddy">
-        <activity android:name=".view.TrackingListActivity"></activity>
+        <activity
+            android:name=".view.GoalHistoryActivity"
+            android:exported="false" />
+        <activity android:name=".view.TrackingListActivity" />
         <activity
             android:name=".view.WelcomeActivity"
             android:noHistory="true">
@@ -26,7 +29,7 @@
         <activity android:name=".view.RegistrationActivity" />
         <activity
             android:name=".view.LoginActivity"
-            android:noHistory="true"></activity>
+            android:noHistory="true" />
         <activity android:name=".view.TrainingListActivity" />
         <activity android:name=".view.BMIActivity" />
         <activity android:name=".view.CalorieCalculationActivity" />

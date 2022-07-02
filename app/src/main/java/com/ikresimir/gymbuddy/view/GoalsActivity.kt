@@ -19,6 +19,7 @@ import java.util.*
 private lateinit var txtDesiredWeight : TextView
 private lateinit var txtStartDate : TextView
 private lateinit var btnSetGoal : Button
+private lateinit var btnGoalHistory : Button
 private lateinit var radioBtnEasy: RadioButton
 private lateinit var radioBtnMedium: RadioButton
 private lateinit var radioBtnIntensive: RadioButton
@@ -42,6 +43,7 @@ class GoalsActivity : AppCompatActivity() {
         txtDesiredWeight = findViewById(R.id.txtDesiredWeight)
         txtStartDate = findViewById(R.id.txtGoalStartDate)
         btnSetGoal = findViewById(R.id.btnSetGoal)
+        btnGoalHistory = findViewById(R.id.btnGoalHistory)
         radioBtnEasy = findViewById(R.id.radioBtnEasyActivity)
         radioBtnMedium = findViewById(R.id.radioBtnMidActivity)
         radioBtnIntensive = findViewById(R.id.radioBtnIntensiveActivity)
@@ -61,6 +63,11 @@ class GoalsActivity : AppCompatActivity() {
                 this.startActivity(intent)
                 finish()
             }
+        }
+
+        btnGoalHistory.setOnClickListener {
+            val intent = Intent(this, GoalHistoryActivity::class.java)
+            this.startActivity(intent)
         }
 
     }

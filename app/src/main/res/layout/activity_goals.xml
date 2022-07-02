@@ -106,5 +106,12 @@
         android:layout_marginHorizontal="100dp"
         android:text="home"
         android:drawableLeft="@drawable/ic_home"/>
+    <Button
+        android:id="@+id/btnGoalHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:text="goal history"
+        android:drawableLeft="@drawable/ic_history"/>
 
 </LinearLayout>

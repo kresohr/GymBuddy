@@ -45,7 +45,7 @@ class SingleTrainingActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         setStartingDate(calendar, txtDate)
 
-        var trainingProfile = TrainingProfile(-1,"","",mutableListOf<Exercise>())
+        var trainingProfile = TrainingProfile(-1,"","",mutableListOf<Exercise>(),false)
         viewModel = SingleTrainingViewModel(txtDate.text.toString())
         val getObjectFromRecyclerOnClick =
             intent.getSerializableExtra("Training")

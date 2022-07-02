@@ -11,4 +11,8 @@ class TrainingListViewModel: ViewModel() {
     fun getListOfTrainings(context: Context): ArrayList<TrainingProfile>{
         return repository.getTrainingList(context)
     }
+
+    fun markTrainingAsDone(trainingId: Int){
+        repository.markTrainingAsDone(trainingId)
+    }
 }

@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private lateinit var btnNewGoal: Button
+private lateinit var btnGoalHistory: Button
 private lateinit var txtHeight: TextView
 private lateinit var txtWeight: TextView
 private lateinit var txtAge: TextView
@@ -34,6 +35,7 @@ class CalorieCalculationActivity : AppCompatActivity() {
             StrictMode.setThreadPolicy(policy)
         }
         btnNewGoal = findViewById(R.id.btnNewGoal)
+        btnGoalHistory = findViewById(R.id.btnGoalsHistory)
         txtAge = findViewById(R.id.txtAge)
         txtHeight = findViewById(R.id.txtCalculatorHeight)
         txtWeight = findViewById(R.id.txtCalculatorWeight)
@@ -61,6 +63,11 @@ class CalorieCalculationActivity : AppCompatActivity() {
         btnNewGoal.setOnClickListener {
             calorieCalculatorViewModel.newGoal(this, endDate)
             val intent = Intent(this, GoalsActivity::class.java)
+            this.startActivity(intent)
+        }
+
+        btnGoalHistory.setOnClickListener{
+            val intent = Intent(this, GoalHistoryActivity::class.java)
             this.startActivity(intent)
         }
 
