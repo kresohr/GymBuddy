@@ -19,6 +19,7 @@ class GoalHistoryActivity : AppCompatActivity() {
 
         val goalsViewModel = GoalsViewModel()
         var goalHistory = goalsViewModel.getAllGoals(this)
+        goalHistory.sortBy { it.goalStart }
         var recyclerView: RecyclerView = findViewById(R.id.recyclerViewGoalHistory)
         val adapter = GoalHistoryAdapter(goalHistory,this)
         recyclerView.layoutManager = LinearLayoutManager(this)
